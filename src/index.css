@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* Tokens de design do projeto — equivalente ao antigo tailwind.config.js
+   No Tailwind v4, cada variável --color-* vira automaticamente as classes
+   utilitárias (bg-darkBg, text-brandBlue, border-borderCol, etc.) */
+@theme {
+  --color-darkBg: #070c18;
+  --color-cardBg: #0f172a;
+  --color-borderCol: #1e293b;
+  --color-brandBlue: #00a2ff;
+  --color-brandOrange: #e0682b;
+
+  --font-sans: "Inter", sans-serif;
+
+  --animate-pulseSlow: pulseSlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseSlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #070c18;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #070c18; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #00a2ff; }
+
+::selection { background: #00a2ff; color: white; }
+
+.glass-card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 41, 59, 0.8);
+}
+
+.glow-blue { box-shadow: 0 0 30px rgba(0, 162, 255, 0.15); }
+.glow-orange { box-shadow: 0 0 30px rgba(224, 104, 43, 0.15); }
+
+.focus-ring:focus-visible {
+  outline: 2px solid #00a2ff;
+  outline-offset: 2px;
+}
+
+@keyframes typing {
+  0%, 5% {
+    width: 0;
+  }
+  45%, 55% {
+    width: 6.6em; /* largura aproximada de "Hello, I'm" — ajuste se trocar a fonte */
+  }
+  95%, 100% {
+    width: 0;
+  }
+}
+
+@keyframes blink-caret {
+  0%, 100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: theme('colors.brandBlue');
+  }
+}
+
+.typing-greeting {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 1px solid;
+  vertical-align: bottom;
+  animation:
+    typing 4s steps(10, end) infinite,
+    blink-caret 0.75s ease-in-out infinite;
+}
+
+.typing-greeting::before {
+  content: "Hello, I'm";
+}
+
