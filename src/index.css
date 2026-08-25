@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* Tokens de design do projeto — equivalente ao antigo tailwind.config.js
    No Tailwind v4, cada variável --color-* vira automaticamente as classes
@@ -9,6 +10,8 @@
   --color-borderCol: #1e293b;
   --color-brandBlue: #00a2ff;
   --color-brandOrange: #e0682b;
+    --font-display: "Space Grotesk", sans-serif; /* títulos, hero */
+  --font-mono: "JetBrains Mono", monospace;      /* tech stack, badges */
 
   --font-sans: "Inter", sans-serif;
 
