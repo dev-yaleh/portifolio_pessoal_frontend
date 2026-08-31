@@ -1,38 +1,69 @@
 import { useState, type MouseEvent } from 'react';
+import { motion, useMotionValue, useSpring } from 'motion/react';
 import TypedText from './TypedText';
-
 
 // Constantes (Mantidas fora do componente para melhor performance)
 const skills = ['Desenvolvedora de Soluções Digitais', 'Desenvolvedora Full Stack', 'Node.js • NestJS • React.js', 'MySQL • PostgreSQL • Docker', 'Cloud & Deploy • APIs Seguras', 'Kanban • Scrum • Trello'];
 
 //Curriculum - Sempre que precisar altualizar o CV altere o id do doc (infos após o download?id=...)
-const CV_URL = "https://drive.google.com/uc?export=download&id=12bmNnfhRx9Gtl2pbVPyU-Baxv8FrmZ_6"; 
+const CV_URL = "https://drive.google.com/uc?export=download&id=12bmNnfhRx9Gtl2pbVPyU-Baxv8FrmZ_6";
+
+// Linhas do "código" exibido no card whoami.ts — cada uma entra com um pequeno atraso
+// em relação à anterior, criando o efeito de digitação em cascata.
+const whoamiLines = [
+  <>
+    <span className="text-brandBlue">const</span> dev = {'{'}
+  </>,
+  <span className="pl-4 block">
+    nome: <span className="text-brandOrange">'Yaleh Nóbrega'</span>,
+  </span>,
+  <span className="pl-4 block">
+    cargo: <span className="text-brandOrange">'Full Stack Developer'</span>,
+  </span>,
+  <span className="pl-4 block">
+    stack: [<span className="text-brandOrange">'NestJS'</span>, <span className="text-brandOrange">'React'</span>, <span className="text-brandOrange">'TypeORM'</span>],
+  </span>,
+  <span className="pl-4 block">
+    disponivel: <span className="text-emerald-400">true</span>
+  </span>,
+  <>{'}'};</>,
+];
 
 interface HeroProps {
   totalProjetos: number | null;
 }
 
 export default function Hero({ totalProjetos }: HeroProps) {
-  // Lógica do Escudo Interativo: inclina o card em 3D conforme a posição
-  // horizontal do mouse dentro dele, criando um leve efeito de profundidade.
-  const [rotateY, setRotateY] = useState(0);
+  // Lógica do Escudo Interativo: inclina o card em 3D conforme a posição do mouse
+  // dentro dele. Usamos useMotionValue + useSpring (em vez de useState puro) para
+  // que o movimento tenha física de mola — suave ao seguir o mouse e ao voltar
+  // ao repouso, nos dois eixos (X e Y).
+  const rotateXMV = useMotionValue(0);
+  const rotateYMV = useMotionValue(0);
+  const rotateX = useSpring(rotateXMV, { stiffness: 150, damping: 18 });
+  const rotateY = useSpring(rotateYMV, { stiffness: 150, damping: 18 });
 
   function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left; // posição x real em pixels
-    // Subtraímos 0.5 para ele saber se o mouse está à esquerda ou direita do centro
-    const yRotation = (x / rect.width - 0.5) * 50
-    setRotateY(yRotation);
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    rotateYMV.set((x / rect.width - 0.5) * 26);
+    rotateXMV.set(-(y / rect.height - 0.5) * 20);
   }
 
   function handleMouseLeave() {
-    setRotateY(0);
+    rotateXMV.set(0);
+    rotateYMV.set(0);
   }
 
   return (
     <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 border-b border-borderCol bg-gradient-to-b from-[#0c152a] to-darkBg">
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brandBlue/10 blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/3 right-10 w-[350px] h-[350px] bg-brandOrange/10 blur-[120px] rounded-full pointer-events-none" />
+      {/* Grade de fundo sutil, esmaecida nas bordas por uma máscara radial */}
+      <div className="pointer-events-none absolute inset-0 grid-bg" />
+
+      {/* Blobs desfocados "flutuando" (sobem/descem + leve zoom em loop) */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brandBlue/10 blur-[140px] rounded-full pointer-events-none animate-floatSlow" />
+      <div className="absolute top-1/3 right-10 w-[350px] h-[350px] bg-brandOrange/10 blur-[120px] rounded-full pointer-events-none animate-floatSlow" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -40,14 +71,14 @@ export default function Hero({ totalProjetos }: HeroProps) {
             <p className="text-xl text-orange-400">Oi, eu sou</p>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-light">
-              Yaleh {' '}
+              Yaleh{' '}
               <span className="text-brandBlue">
-               Nóbrega
+                Nóbrega
               </span>
             </h1>
 
             <h2 className="text-lg sm:text-2xl text-slate-300 font-light min-h-[2.5rem]">
-            <TypedText strings={skills} />
+              <TypedText strings={skills} />
             </h2>
 
             <p className="text-lg text-white max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
@@ -88,14 +119,10 @@ export default function Hero({ totalProjetos }: HeroProps) {
           </div>
 
           <div className="lg:col-span-5" style={{ perspective: '1200px' }}>
-            <div
+            <motion.div
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              style={{
-                transform: `rotateY(${rotateY}deg)`,
-                transition: 'transform 0.2s ease-out',
-                transformStyle: 'preserve-3d',
-              }}
+              style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
               className="relative rounded-2xl p-1 bg-gradient-to-tr from-brandBlue via-borderCol to-brandOrange shadow-2xl glow-blue"
             >
               <div className="rounded-2xl overflow-hidden bg-cardBg border border-borderCol">
@@ -106,17 +133,19 @@ export default function Hero({ totalProjetos }: HeroProps) {
                   <span className="ml-2 font-mono text-xs text-slate-400">whoami.ts</span>
                 </div>
                 <div className="p-6 font-mono text-sm space-y-2 text-slate-300">
-                  <p><span className="text-brandBlue">const</span> dev = {'{'}</p>
-                  <p className="pl-4">nome: <span className="text-brandOrange">'Yaleh Nóbrega'</span>,</p>
-                  <p className="pl-4">cargo: <span className="text-brandOrange">'Full Stack Developer'</span>,</p>
-                  <p className="pl-4">
-                    stack: [<span className="text-brandOrange">'NestJS'</span>, <span className="text-brandOrange">'React'</span>, <span className="text-brandOrange">'TypeORM'</span>],
-                  </p>
-                  <p className="pl-4">disponivel: <span className="text-emerald-400">true</span></p>
-                  <p>{'}'};</p>
+                  {whoamiLines.map((line, i) => (
+                    <motion.p
+                      key={i}
+                      initial={{ opacity: 0, x: -14 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.4 + i * 0.14, duration: 0.45 }}
+                    >
+                      {line}
+                    </motion.p>
+                  ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

@@ -16,11 +16,28 @@
   --font-sans: "Inter", sans-serif;
 
   --animate-pulseSlow: pulseSlow 2s ease-in-out infinite;
+  --animate-floatSlow: floatSlow 12s ease-in-out infinite; /* blobs do Hero */
 }
 
 @keyframes pulseSlow {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
+}
+
+/* Sobe/desce + leve zoom, em loop — usado nos blobs desfocados do Hero */
+@keyframes floatSlow {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(0, -30px, 0) scale(1.08); }
+}
+
+/* Grade de fundo sutil, esmaecida nas bordas por uma máscara radial.
+   Usa a própria cor da marca (brandBlue) com baixa opacidade nas linhas. */
+@utility grid-bg {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--color-brandBlue) 12%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--color-brandBlue) 12%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 75%);
 }
 
 body {
@@ -84,4 +101,3 @@ body {
 .typing-greeting::before {
   content: "Hello, I'm";
 }
-

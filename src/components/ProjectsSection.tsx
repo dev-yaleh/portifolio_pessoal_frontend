@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getProjetos, getCategorias, type ProjetosParams } from '../api/api';
 import ProjectCard from './ProjectCard';
 import ProjectModal from './ProjectModal';
+import { SectionTitle } from './Reveal';
 import type { Categoria, Projeto } from '../types';
 
 const LIMIT = 6;
@@ -65,10 +66,7 @@ export default function ProjectsSection({ onTotalChange }: ProjectsSectionProps)
   return (
     <section id="projetos" className="py-20 border-b border-borderCol">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <span className="text-brandOrange text-xs font-bold uppercase tracking-widest">Portfólio</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">Projetos</h2>
-        </div>
+        <SectionTitle eyebrow="Portfólio" title="Projetos" />
 
         <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
           <select

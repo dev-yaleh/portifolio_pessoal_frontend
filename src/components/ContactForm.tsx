@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { enviarContato } from '../api/api';
 import type { ContatoPayload } from '../api/api';
+import { SectionTitle } from './Reveal';
 
 type Status = 'idle' | 'sending' | 'ok' | 'error';
 
@@ -34,13 +35,10 @@ export default function ContactForm() {
   return (
     <section id="contato" className="py-20">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <span className="text-brandOrange text-xs font-bold uppercase tracking-widest">Contato</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">Vamos conversar?</h2>
-          <p className="text-slate-400 mt-3 font-light">
-            Tem um projeto em mente ou uma oportunidade? Me manda uma mensagem.
-          </p>
-        </div>
+        <SectionTitle eyebrow="Contato" title="Vamos conversar?" />
+        <p className="text-slate-400 -mt-8 mb-10 text-center font-light">
+          Tem um projeto em mente ou uma oportunidade? Me manda uma mensagem.
+        </p>
 
         <form onSubmit={handleSubmit} className="glass-card rounded-2xl border border-borderCol p-6 sm:p-8 space-y-5">
           <div>

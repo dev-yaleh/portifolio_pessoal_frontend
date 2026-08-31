@@ -1,3 +1,6 @@
+import { motion } from 'motion/react';
+import { SectionTitle } from './Reveal';
+
 interface TechItem {
   name: string;
   icon: string;
@@ -20,19 +23,23 @@ export default function TechStack() {
   return (
     <section id="stack" className="py-20 border-b border-borderCol bg-cardBg/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <span className="text-brandOrange text-xs font-bold uppercase tracking-widest">Tech Stack</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">Ferramentas do dia a dia</h2>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-          {stack.map((t) => (
-            <div
+        <SectionTitle eyebrow="Tech Stack" title="Ferramentas do dia a dia" />
+
+        {/* Pills com borda que reage no hover e reveal em cascata */}
+        <div className="flex flex-wrap justify-center gap-3">
+          {stack.map((t, i) => (
+            <motion.span
               key={t.name}
-              className="glass-card rounded-xl p-5 border border-borderCol flex flex-col items-center gap-3 hover:border-brandBlue/50 transition-colors"
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.45, delay: i * 0.045 }}
+              whileHover={{ y: -4 }}
+              className="flex items-center gap-2 rounded-full border border-borderCol bg-darkBg/60 px-4 py-2 font-mono text-sm text-slate-300 transition-colors hover:border-brandBlue/60 hover:text-white"
             >
-              <i className={`${t.icon} text-2xl text-brandBlue`} />
-              <span className="text-xs font-medium text-slate-300 text-center">{t.name}</span>
-            </div>
+              <i className={`${t.icon} text-brandBlue`} />
+              {t.name}
+            </motion.span>
           ))}
         </div>
       </div>
