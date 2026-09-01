@@ -55,6 +55,7 @@ export function SectionTitle({ eyebrow, title, highlight }: SectionTitleProps) {
       <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
         {title} {highlight ? <span className="text-gradient">{highlight}</span> : null}
       </h2>
+
       <motion.div
         className="mt-5 h-px w-full origin-left bg-gradient-to-r from-brandBlue via-brandOrange to-transparent"
         initial={{ scaleX: 0 }}
@@ -62,6 +63,32 @@ export function SectionTitle({ eyebrow, title, highlight }: SectionTitleProps) {
         viewport={{ once: true }}
         transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       />
+    </Reveal>
+  );
+
+}
+
+export function SectionHeading({
+  eyebrow,
+  title,
+  highlight,
+  subtitle,
+}: {
+  eyebrow?: string;
+  title: string;
+  highlight: string;
+  subtitle?: string;
+}) {
+  return (
+    <Reveal from="left" className="from=mb-10 max-w-2xl">
+      {eyebrow ? (
+        <p className="font-mono text-base uppercase tracking-[0.25em] text-ember">{eyebrow}</p>
+      ) : null}
+      <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+      {title} {highlight ? <span className="text-gradient">{highlight}</span> : null}
+      </h2>
+      <div className="ember-rule mt-4 w-24 rounded-full" />
+      {subtitle ? <p className="mt-4 text-muted-foreground">{subtitle}</p> : null}
     </Reveal>
   );
 }
