@@ -73,20 +73,24 @@ export function SectionHeading({
   title,
   highlight,
   subtitle,
+  joined = false,
 }: {
   eyebrow?: string;
   title: string;
   highlight: string;
   subtitle?: string;
+  joined?: boolean;
 }) {
   return (
     <Reveal from="left" className="from=mb-10 max-w-2xl">
       {eyebrow ? (
         <p className="font-mono text-base uppercase tracking-[0.25em] text-ember">{eyebrow}</p>
       ) : null}
-              <div className="w-117 h-[2px] mt-3 bg-gradient-to-r from-brandBlue to-brandOrange" />
+      <div className="w-117 h-[2px] mt-3 bg-gradient-to-r from-brandBlue to-brandOrange" />
       <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-      {title} {highlight ? <span className="text-gradient">{highlight}</span> : null}
+        {title}
+        {joined ? '' : ' '}
+        {highlight ? <span className="text-gradient">{highlight}</span> : null}
       </h2>
       <div className="ember-rule mt-18 w-24 rounded-full" />
       {subtitle ? <p className="mt-4 text-muted-foreground">{subtitle}</p> : null}

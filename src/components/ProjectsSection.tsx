@@ -4,6 +4,7 @@ import ProjectCard from './ProjectCard';
 import ProjectModal from './ProjectModal';
 import { SectionTitle } from './Reveal';
 import type { Categoria, Projeto } from '../types';
+import { Reveal, SectionHeading} from '.././components/Reveal'; 
 
 const LIMIT = 6;
 
@@ -64,77 +65,75 @@ export default function ProjectsSection({ onTotalChange }: ProjectsSectionProps)
   }
 
   return (
-    <section id="projetos" className="py-20 border-b border-borderCol">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle eyebrow="Portfólio" title="Projetos"/>
+    <section id="projetos" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-25">
+      <SectionHeading eyebrow="[02] PORTIFÓLIO" title="PR" highlight="OJETO" joined />
 
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
-          <select
-            value={categoriaId}
-            onChange={(e) => resetPageAnd(setCategoriaId)(e.target.value)}
-            className="bg-cardBg border border-borderCol text-sm text-slate-200 rounded-xl px-4 py-2.5 focus-ring"
-          >
-            <option value="">Todas as categorias</option>
-            {categorias.map((c) => (
-              <option key={c.id} value={c.id}>{c.name}</option>
-            ))}
-          </select>
+      <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+        <select
+          value={categoriaId}
+          onChange={(e) => resetPageAnd(setCategoriaId)(e.target.value)}
+          className="bg-cardBg border border-borderCol text-sm text-slate-200 rounded-xl px-4 py-2.5 focus-ring"
+        >
+          <option value="">Todas as categorias</option>
+          {categorias.map((c) => (
+            <option key={c.id} value={c.id}>{c.name}</option>
+          ))}
+        </select>
 
-          <select
-            value={featured}
-            onChange={(e) => resetPageAnd(setFeatured)(e.target.value)}
-            className="bg-cardBg border border-borderCol text-sm text-slate-200 rounded-xl px-4 py-2.5 focus-ring"
-          >
-            <option value="">Todos os projetos</option>
-            <option value="true">Somente destaques</option>
-          </select>
+        <select
+          value={featured}
+          onChange={(e) => resetPageAnd(setFeatured)(e.target.value)}
+          className="bg-cardBg border border-borderCol text-sm text-slate-200 rounded-xl px-4 py-2.5 focus-ring"
+        >
+          <option value="">Todos os projetos</option>
+          <option value="true">Somente destaques</option>
+        </select>
 
-          <input
-            value={tech}
-            onChange={(e) => resetPageAnd(setTech)(e.target.value)}
-            placeholder="Filtrar por tech (ex: React)"
-            className="bg-cardBg border border-borderCol text-sm text-slate-200 rounded-xl px-4 py-2.5 placeholder:text-slate-500 focus-ring"
-          />
-        </div>
-
-        {loading ? (
-          <p className="text-center text-slate-400">Carregando projetos...</p>
-        ) : error ? (
-          <p className="text-center text-red-400">{error}</p>
-        ) : projetos.length === 0 ? (
-          <p className="text-center text-slate-400">Nenhum projeto encontrado com esses filtros.</p>
-        ) : (
-          <>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projetos.map((p) => (
-                <ProjectCard key={p.id} projeto={p} onOpen={setSelected} />
-              ))}
-            </div>
-
-            {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-2 mt-10">
-                <button
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  disabled={page === 1}
-                  className="px-4 py-2 rounded-lg border border-borderCol text-slate-300 text-sm disabled:opacity-40 hover:border-brandBlue focus-ring"
-                >
-                  Anterior
-                </button>
-                <span className="text-sm text-slate-400">
-                  Página {page} de {totalPages}
-                </span>
-                <button
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={page === totalPages}
-                  className="px-4 py-2 rounded-lg border border-borderCol text-slate-300 text-sm disabled:opacity-40 hover:border-brandBlue focus-ring"
-                >
-                  Próxima
-                </button>
-              </div>
-            )}
-          </>
-        )}
+        <input
+          value={tech}
+          onChange={(e) => resetPageAnd(setTech)(e.target.value)}
+          placeholder="Filtrar por tech (ex: React)"
+          className="bg-cardBg border border-borderCol text-sm text-slate-200 rounded-xl px-4 py-2.5 placeholder:text-slate-500 focus-ring"
+        />
       </div>
+
+      {loading ? (
+        <p className="text-center text-slate-400">Carregando projetos...</p>
+      ) : error ? (
+        <p className="text-center text-red-400">{error}</p>
+      ) : projetos.length === 0 ? (
+        <p className="text-center text-slate-400">Nenhum projeto encontrado com esses filtros.</p>
+      ) : (
+        <>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projetos.map((p) => (
+              <ProjectCard key={p.id} projeto={p} onOpen={setSelected} />
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-10">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="px-4 py-2 rounded-lg border border-borderCol text-slate-300 text-sm disabled:opacity-40 hover:border-brandBlue focus-ring"
+              >
+                Anterior
+              </button>
+              <span className="text-sm text-slate-400">
+                Página {page} de {totalPages}
+              </span>
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="px-4 py-2 rounded-lg border border-borderCol text-slate-300 text-sm disabled:opacity-40 hover:border-brandBlue focus-ring"
+              >
+                Próxima
+              </button>
+            </div>
+          )}
+        </>
+      )}
 
       <ProjectModal projeto={selected} onClose={() => setSelected(null)} />
     </section>

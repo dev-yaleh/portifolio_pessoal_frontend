@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { SectionTitle } from './Reveal';
+import { SectionHeading } from './Reveal';
 
 interface TechItem {
   name: string;
@@ -23,7 +23,7 @@ export default function TechStack() {
   return (
     <section id="stack" className="py-20 border-b border-borderCol bg-cardBg/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle eyebrow="Tech Stack" title="Ferramentas do dia a dia" />
+        <SectionHeading eyebrow="[03] STACKS" title="Ferramentas" highlight="do Dia a Dia"/>
 
         {/* Pills com borda que reage no hover e reveal em cascata */}
         <div className="flex flex-wrap justify-center gap-3">
