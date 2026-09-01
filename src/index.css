@@ -8,15 +8,19 @@
   --color-darkBg: #070c18;
   --color-cardBg: #0f172a;
   --color-borderCol: #1e293b;
-  --color-brandBlue: #00a2ff;
-  --color-brandOrange: #e0682b;
-    --font-display: "Space Grotesk", sans-serif; /* títulos, hero */
-  --font-mono: "JetBrains Mono", monospace;      /* tech stack, badges */
+  --color-brandBlue: oklch(72% .15 235);
+  --color-brandOrange: oklch(0.72 0.17 55);
 
-  --font-sans: "Inter", sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;/* títulos, hero */
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;      /* tech stack, badges */
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 
   --animate-pulseSlow: pulseSlow 2s ease-in-out infinite;
   --animate-floatSlow: floatSlow 12s ease-in-out infinite; /* blobs do Hero */
+
+  --color-brand: oklch(0.72 0.15 235);   /* azul do projeto de referência */
+  --color-ember: oklch(0.75 0.17 55);    /* laranja do projeto de referência */
+  --color-mint: oklch(0.82 0.16 165);    /* verde-água, terceiro acento */
 }
 
 @keyframes pulseSlow {
@@ -34,8 +38,8 @@
    Usa a própria cor da marca (brandBlue) com baixa opacidade nas linhas. */
 @utility grid-bg {
   background-image:
-    linear-gradient(color-mix(in oklab, var(--color-brandBlue) 12%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in oklab, var(--color-brandBlue) 12%, transparent) 1px, transparent 1px);
+    linear-gradient(color-mix(in oklab, var(--color-brand) 12%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--color-brand) 12%, transparent) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 75%);
 }
@@ -100,4 +104,24 @@ body {
 
 .typing-greeting::before {
   content: "Hello, I'm";
+}
+
+@utility text-gradient {
+  background: linear-gradient(120deg, var(--color-brandBlue) 0%, var(--color-brandOrange) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientPan 8s ease infinite;
+}
+
+@keyframes gradientPan {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@utility divider-gradient {
+  background: linear-gradient(90deg, var(--color-brandBlue) 0%, var(--color-brandOrange) 100%);
+  background-size: 200% 200%;
+  animation: gradientPan 8s ease infinite;
 }

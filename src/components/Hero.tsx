@@ -57,31 +57,33 @@ export default function Hero({ totalProjetos }: HeroProps) {
   }
 
   return (
-    <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 border-b border-borderCol bg-gradient-to-b from-[#0c152a] to-darkBg">
+    <section className="relative overflow-hidden pt-16 pb-24 lg:pt-32 lg:pb-32 border-b border-borderCol bg-gradient-to-b from-[#0c152a] to-darkBg">
       {/* Grade de fundo sutil, esmaecida nas bordas por uma máscara radial */}
       <div className="pointer-events-none absolute inset-0 grid-bg" />
 
       {/* Blobs desfocados "flutuando" (sobem/descem + leve zoom em loop) */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brandBlue/10 blur-[140px] rounded-full pointer-events-none animate-floatSlow" />
-      <div className="absolute top-1/3 right-10 w-[350px] h-[350px] bg-brandOrange/10 blur-[120px] rounded-full pointer-events-none animate-floatSlow" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brand/25 blur-[150px] rounded-full pointer-events-none animate-floatSlow" />
+    <div className="absolute top-1/3 right-10 w-[420px] h-[420px] bg-ember/20 blur-[140px] rounded-full pointer-events-none animate-floatSlow" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-4 text-center lg:text-left">
-            <p className="text-xl text-orange-400">Oi, eu sou</p>
+            <p className="text-xl text-[oklch(72%_0.17_55)] mt-12">Oi, eu sou</p>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-light">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-300 leading-light font-mono">
               Yaleh{' '}
-              <span className="text-brandBlue">
+              <span className="text-gradient font-mono">
                 Nóbrega
               </span>
             </h1>
 
-            <h2 className="text-lg sm:text-2xl text-slate-300 font-light min-h-[2.5rem]">
+            <div className="w-117 h-[2px] bg-gradient-to-r from-brandBlue to-brandOrange mx-auto lg:mx-0" />
+
+            <h2 className="text-lg sm:text-2xl font-light min-h-[2.5rem] text-gradient font-mono">
               <TypedText strings={skills} />
             </h2>
 
-            <p className="text-lg text-white max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+            <p className="text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
               Transformo ideias em soluções digitais modernas, funcionais e escaláveis. Desenvolvendo aplicações reais, complexas e desafiadoras. Desde backend seguros e escaláveis até interfaces modernas e intuitivas.
             </p>
 
@@ -130,7 +132,7 @@ export default function Hero({ totalProjetos }: HeroProps) {
                   <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
                   <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
-                  <span className="ml-2 font-mono text-xs text-slate-400">whoami.ts</span>
+                  <span className="ml-2 font-mono text-xs text-slate-400"></span>
                 </div>
                 <div className="p-6 font-mono text-sm space-y-2 text-slate-300">
                   {whoamiLines.map((line, i) => (
