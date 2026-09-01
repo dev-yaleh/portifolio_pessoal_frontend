@@ -66,7 +66,7 @@ export default function ProjectsSection({ onTotalChange }: ProjectsSectionProps)
   return (
     <section id="projetos" className="py-20 border-b border-borderCol">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle eyebrow="Portfólio" title="Projetos" />
+        <SectionTitle eyebrow="Portfólio" title="Projetos"/>
 
         <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
           <select

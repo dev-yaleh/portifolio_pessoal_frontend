@@ -8,8 +8,8 @@
   --color-darkBg: #070c18;
   --color-cardBg: #0f172a;
   --color-borderCol: #1e293b;
-  --color-brandBlue: oklch(72% .15 235);
-  --color-brandOrange: oklch(0.72 0.17 55);
+  --color-brandBlue: oklch(72% .15 235); /*#12B2F4*/
+  --color-brandOrange: oklch(0.72 0.17 55); /*#F3821D*/
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;/* títulos, hero */
   --font-mono: "JetBrains Mono", ui-monospace, monospace;      /* tech stack, badges */
