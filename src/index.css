@@ -5,9 +5,9 @@
    No Tailwind v4, cada variável --color-* vira automaticamente as classes
    utilitárias (bg-darkBg, text-brandBlue, border-borderCol, etc.) */
 @theme {
-  --color-darkBg: #070c18;
+  --color-darkBg: #050811; /*#070c18*/
   --color-cardBg: #0f172a;
-  --color-borderCol: #1e293b;
+  --color-borderCol: #1A2643; /* #1e293b */
   --color-brandBlue: oklch(72% .15 235); /*#12B2F4*/
   --color-brandOrange: oklch(0.72 0.17 55); /*#F3821D*/
 
@@ -124,4 +124,24 @@ body {
   background: linear-gradient(90deg, var(--color-brandBlue) 0%, var(--color-brandOrange) 100%);
   background-size: 200% 200%;
   animation: gradientPan 8s ease infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@utility animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+/* Esmaece as pontas esquerda/direita do marquee, como o grid-bg faz nas bordas */
+@utility fade-edge-x {
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #070c18;
+  overflow-x: hidden;
 }

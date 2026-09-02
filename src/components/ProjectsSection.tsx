@@ -66,7 +66,7 @@ export default function ProjectsSection({ onTotalChange }: ProjectsSectionProps)
 
   return (
     <section id="projetos" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-25">
-      <SectionHeading eyebrow="[02] PORTIFÓLIO" title="PR" highlight="OJETO" joined />
+      <SectionHeading eyebrow="[ 02 ] PORTIFÓLIO" title="PR" highlight="OJETO" joined />
 
       <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
         <select

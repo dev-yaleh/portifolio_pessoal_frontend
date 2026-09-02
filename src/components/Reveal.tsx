@@ -87,10 +87,10 @@ export function SectionHeading({
         <p className="font-mono text-base uppercase tracking-[0.25em] text-ember">{eyebrow}</p>
       ) : null}
       <div className="w-117 h-[2px] mt-3 bg-gradient-to-r from-brandBlue to-brandOrange" />
-      <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+      <h2 className="mt-3 text-3xl font-extrabold tracking-tight uppercase text-white sm:text-4xl">
         {title}
         {joined ? '' : ' '}
-        {highlight ? <span className="text-gradient">{highlight}</span> : null}
+        {highlight ? <span className="text-gradient uppercase">{highlight}</span> : null}
       </h2>
       <div className="ember-rule mt-18 w-24 rounded-full" />
       {subtitle ? <p className="mt-4 text-muted-foreground">{subtitle}</p> : null}
