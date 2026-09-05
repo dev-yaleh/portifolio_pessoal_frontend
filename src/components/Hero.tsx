@@ -111,7 +111,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 border-b border-borderCol bg-gradient-to-b from-[#0c152a] to-darkBg">
+    <section className="relative overflow-hidden pt-48 pb-24 lg:pt-56 lg:pb-32 border-b border-borderCol bg-gradient-to-b from-[#0c152a] to-darkBg">
       {/* Grade de fundo sutil, esmaecida nas bordas por uma máscara radial */}
       <div className="pointer-events-none absolute inset-0 grid-bg" />
 
@@ -136,7 +136,7 @@ export default function Hero() {
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-4 text-center lg:text-left">
-            <p className="text-xl text-orange-400">Oi, eu sou</p>
+            <p className="lg:text-2xl text-orange-400">Oi, eu sou</p>
 
             <h1 className="text-white">
               Yaleh{' '}
@@ -145,17 +145,17 @@ export default function Hero() {
               </span>
             </h1>
 
-            <div className="w-24 h-[2px] mx-auto lg:mx-0 divider-gradient" />
+            <div className="w-127 h-[2px] mx-auto lg:mx-0 divider-gradient" />
 
             <h2 className="text-lg sm:text-2xl font-light min-h-[2.5rem] text-gradient font-mono">
               <TypedText strings={skills} />
             </h2>
 
-            <p className="text-lg text-white max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed mt-8">
+            <p className="text-lg text-white max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed mt-6">
               Transformo ideias em soluções digitais modernas, funcionais e escaláveis. Desenvolvendo aplicações reais, complexas e desafiadoras. Desde backend seguros e escaláveis até interfaces modernas e intuitivas.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-8">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-10">
               <a
                 href="#projetos"
                 className="px-6 py-3.5 rounded-xl bg-brandBlue text-white text-base font-semibold shadow-lg shadow-brandBlue/20 hover:bg-sky-500 transition-all flex items-center gap-2"
@@ -172,12 +172,16 @@ export default function Hero() {
               </a>
             </div>
 
+            {/* Linha separadora — margem de cima e de baixo controladas independentemente */}
+            <div className="mt-12 mb-6 h-px bg-borderCol" />
+
             {/* Stats vindos do GitHub — estilo discreto, sem card/borda */}
-            <div className="pt-8 border-t border-borderCol flex flex-wrap items-start justify-center lg:justify-start gap-10">
+            <div className="flex flex-wrap items-start justify-center lg:justify-start gap-10 mt-12">
               <StatItem icon="fa-solid fa-diagram-project" value={stats?.totalRepos ?? null} label="Projetos Publicados" />
               <StatItem icon="fa-solid fa-code-commit" value={stats?.totalCommits ?? null} label="Commits" />
               <StatItem icon="fa-solid fa-mug-hot" value={stats?.coffees ?? null} label="Copos de Café" />
             </div>
+            
           </div>
 
           <div className="lg:col-span-5" style={{ perspective: '1200px' }}>
