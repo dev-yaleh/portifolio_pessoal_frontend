@@ -38,21 +38,21 @@ export default function Navbar() {
       }`}
         //? "glass-card border-b border-border py-3" : "py-5"      }`}
       >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-22">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brandBlue to-brandOrange p-0.5 shadow-lg group-hover:scale-105 transition-transform">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-brandBlue to-brandOrange p-0.5 shadow-lg group-hover:scale-105 transition-transform">
             <div className="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center font-bold text-brandBlue text-lg">
               YN
             </div>
           </div>
           <div>
-            <span className="font-bold text-lg tracking-tight text-white block leading-none">Yaleh Nóbrega</span>
-            <span className="text-xs text-brandOrange font-medium tracking-wide block -mt-0.1">Full Stack Developer</span>
+            <span className="font-bold text-xl tracking-tight text-white block leading-none">Yaleh Nóbrega</span>
+            <span className="text-base text-brandOrange font-medium tracking-wide block -mt-0.1">Full Stack Developer</span>
           </div>
         </Link>
 
         {onHome && (
-          <nav className="hidden md:flex items-center gap-1 text-sm font-medium text-slate-300">
+          <nav className="hidden md:flex items-center gap-1 text-lg font-medium text-slate-300">
             {links.map((l, i) => (
               <motion.a
                 key={l.href}
@@ -64,20 +64,20 @@ export default function Navbar() {
               >
                 {l.label}
                 {/* sublinhado que "desliza" da esquerda para a direita no hover */}
-                <span className="absolute inset-x-4 -bottom-0.5 h-px origin-left scale-x-0 bg-gradient-to-r from-brandBlue to-brandOrange transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="absolute inset-x-4 -bottom-0.5 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-brandBlue to-brandOrange transition-transform duration-300 group-hover:scale-x-100" />
               </motion.a>
             ))}
           </nav>
         )}
 
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+          <div className="hidden sm:flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulseSlow" /> Online
           </div>
           <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             <Link
               to="/admin/login"
-              className="px-2 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg border border-brandBlue/40 text-brandBlue bg-brandBlue/10 hover:bg-brandBlue hover:text-white transition-all duration-300 flex items-center gap-2 shadow-sm focus-ring"
+              className="px-2.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-lg border border-brandBlue/40 text-brandBlue bg-brandBlue/10 hover:bg-brandBlue hover:text-white transition-all duration-300 flex items-center gap-2 shadow-sm focus-ring"
             >
               <i className="fa-solid fa-gear" />
             </Link>
