@@ -86,4 +86,12 @@ export const getMensagens = () => api.get<Mensagem[]>('/contato');
 
 export const marcarMensagemLida = (id: number | string) => api.put(`/contato/${id}/lida`);
 
+export interface GithubStats {
+  totalRepos: number;
+  totalCommits: number;
+  coffees: number;
+}
+
+export const getGithubStats = () => api.get<GithubStats>('/github-stats');
+
 export default api;

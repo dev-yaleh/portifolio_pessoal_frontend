@@ -6,13 +6,11 @@ import TechStack from '../components/TechStack';
 import ContactForm from '../components/ContactForm';
 
 export default function Home() {
-  const [total, setTotal] = useState<number | null>(null);
-
   return (
     <>
-      <Hero totalProjetos={total} />
+      <Hero />
       <About />
-      <ProjectsSection onTotalChange={setTotal} />
+      <ProjectsSection onTotalChange={() => {}} />
       <TechStack />
       <ContactForm />
     </>
