@@ -71,7 +71,7 @@ export default function TechStack() {
           <div className="relative left-1/2 w-screen -translate-x-1/2 border-y border-borderCol bg-cardBg/30 py-8 mb-14">
             <div className="flex w-max gap-8 px-6 animate-marquee hover:[animation-play-state:paused]">
               {[...allTechs, ...allTechs].map((t, i) => (
-            <div key={`${t.name}-${i}`} className="flex items-center gap-8 ">
+            <div key={`${t.name}-${i}`} className="flex items-center gap-8">
               <MarqueeItem {...t} />
               {i < allTechs.length * 2 - 1 && <span className="text-slate-600">•</span>}
             </div>
