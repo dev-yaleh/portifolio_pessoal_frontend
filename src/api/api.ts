@@ -30,14 +30,28 @@ export interface ProjetosParams {
   tech?: string;
 }
 
+// Payload de escrita: usa apenas o id da categoria, não o objeto Categoria completo
+export interface ProjetoPayload {
+  name: string;
+  description: string;
+  techs: string[];
+  images: string[];
+  videos: string[];
+  liveLink: string;
+  repoLink: string;
+  featured: boolean;
+  order: number;
+  categoria?: { id: number };
+}
+
 export const getProjetos = (params: ProjetosParams = {}) =>
   api.get<ProjetosResponse>('/projetos', { params });
 
 export const getProjetoById = (id: number | string) => api.get<Projeto>(`/projetos/${id}`);
 
-export const createProjeto = (data: Partial<Projeto>) => api.post<Projeto>('/projetos', data);
+export const createProjeto = (data: ProjetoPayload) => api.post<Projeto>('/projetos', data);
 
-export const updateProjeto = (data: Partial<Projeto> & { id: number }) =>
+export const updateProjeto = (data: ProjetoPayload & { id: number }) =>
   api.put<Projeto>('/projetos', data);
 
 export const deleteProjeto = (id: number | string) => api.delete(`/projetos/${id}`);
