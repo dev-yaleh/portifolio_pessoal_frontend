@@ -59,17 +59,13 @@ export const deleteProjeto = (id: number | string) => api.delete(`/projetos/${id
 export const uploadProjetoImagem = (id: number | string, file: File) => {
   const formData = new FormData();
   formData.append('file', file);
-  return api.post(`/projetos/${id}/imagem`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  return api.post(`/projetos/${id}/imagem`, formData)
 };
 
 export const uploadProjetoVideo = (id: number | string, file: File) => {
   const formData = new FormData();
   formData.append('file', file);
-  return api.post(`/projetos/${id}/video`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  return api.post(`/projetos/${id}/video`, formData)
 };
 
 // --- Categorias ---
