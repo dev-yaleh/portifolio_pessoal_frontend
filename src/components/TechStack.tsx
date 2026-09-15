@@ -52,8 +52,8 @@ function SkillTile({ name, icon }: TechItem) {
 // Item da faixa (marquee): ícone pequeno + nome, sem card — separado por um ponto.
 function MarqueeItem({ name, icon }: TechItem) {
   return (
-    <div className="flex items-center gap-2.5 shrink-0">
-      <i className={`${icon} text-base text-slate-400`} />
+    <div className="flex items-center gap-8 shrink-0">
+      <i className={`${icon} text-3xl text-slate-400`} />
       <span className="text-sm font-mono text-slate-300 whitespace-nowrap">{name}</span>
     </div>
   );
@@ -82,7 +82,7 @@ export default function TechStack() {
           {/* Grid separado por categoria — lado a lado, 4 colunas cada */}
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
-              <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brandBlue mb-5">
+              <h3 className="flex items-center gap-2 font-bold uppercase tracking-widest text-brandBlue mb-5">
                 <i className="fa-solid fa-display" /> Frontend
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -93,7 +93,7 @@ export default function TechStack() {
             </div>
 
             <div>
-              <h3 className="flex items-center gap-2 text-s font-bold uppercase tracking-widest text-brandOrange mb-5">
+              <h3 className="flex items-center gap-2 font-bold uppercase tracking-widest text-brandOrange mb-5">
                 <i className="fa-solid fa-server" /> Backend
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">

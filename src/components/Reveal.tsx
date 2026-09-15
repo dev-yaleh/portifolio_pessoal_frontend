@@ -51,8 +51,8 @@ interface SectionTitleProps {
 export function SectionTitle({ eyebrow, title, highlight }: SectionTitleProps) {
   return (
     <Reveal className="mb-12 text-center">
-      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-brandOrange">{eyebrow}</p>
-      <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+      <p className="font-semibold uppercase tracking-[0.35em] text-brandOrange">{eyebrow}</p>
+      <h2 className="mt-3 font-extrabold tracking-tight text-white ">
         {title} {highlight ? <span className="text-gradient">{highlight}</span> : null}
       </h2>
 
@@ -82,12 +82,21 @@ export function SectionHeading({
   joined?: boolean;
 }) {
   return (
-    <Reveal from="left" className="from=mb-10 max-w-2xl">
+    <Reveal from="left" className="from=mb-10 max-w-3xl">
       {eyebrow ? (
-        <p className="font-mono text-base uppercase tracking-[0.25em] text-ember">{eyebrow}</p>
+        <p className="font-mono uppercase tracking-[0.25em] text-ember">{eyebrow}</p>
       ) : null}
-      <div className="w-117 h-[2px] mt-3 bg-gradient-to-r from-brandBlue to-brandOrange" />
-      <h2 className="mt-3 text-3xl font-extrabold tracking-tight uppercase text-white sm:text-4xl">
+
+      <motion.div
+        className="mt-5 h-px w-full origin-left bg-gradient-to-r from-brandBlue via-brandOrange to-transparent"
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+      />
+
+       {/* <div className="w-117 h-[2px] mt-3 bg-gradient-to-r from-brandBlue to-brandOrange" /> */}
+      <h2 className="mt-3 font-extrabold tracking-tight uppercase text-white">
         {title}
         {joined ? '' : ' '}
         {highlight ? <span className="text-gradient uppercase">{highlight}</span> : null}
