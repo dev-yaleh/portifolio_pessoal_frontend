@@ -1,4 +1,6 @@
 import type { Projeto } from '../types';
+import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import type { MouseEvent } from 'react';
 
 interface ProjectCardProps {
   projeto: Projeto;
@@ -7,11 +9,31 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ projeto, onOpen }: ProjectCardProps) {
   const cover = projeto.images?.[0];
+  const pointerX = useMotionValue(0.5);
+  const pointerY = useMotionValue(0.5);
+  const rotateX = useSpring(useTransform(pointerY, [0, 1], [5, -5]), { stiffness: 180, damping: 22 });
+  const rotateY = useSpring(useTransform(pointerX, [0, 1], [-5, 5]), { stiffness: 180, damping: 22 });
+
+  function trackPointer(event: MouseEvent<HTMLButtonElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    pointerX.set((event.clientX - rect.left) / rect.width);
+    pointerY.set((event.clientY - rect.top) / rect.height);
+    event.currentTarget.style.setProperty('--glow-x', `${event.clientX - rect.left}px`);
+    event.currentTarget.style.setProperty('--glow-y', `${event.clientY - rect.top}px`);
+  }
 
   return (
-    <button
+    <motion.button
       onClick={() => onOpen(projeto)}
-      className="group text-left glass-card rounded-2xl border border-borderCol overflow-hidden hover:border-brandBlue/50 hover:-translate-y-1 transition-all duration-300 focus-ring"
+      onMouseMove={trackPointer}
+      onMouseLeave={() => { pointerX.set(0.5); pointerY.set(0.5); }}
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
+      whileTap={{ scale: 0.985 }}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.45 }}
+      className="project-glow group text-left glass-card rounded-2xl border border-borderCol overflow-hidden hover:border-brandBlue/50 transition-colors duration-300 focus-ring"
     >
       <div className="h-44 bg-darkBg overflow-hidden relative">
         {cover ? (
@@ -61,6 +83,6 @@ export default function ProjectCard({ projeto, onOpen }: ProjectCardProps) {
           </span>
         </div>
       </div>
-    </button>
+    </motion.button>
   );
 }

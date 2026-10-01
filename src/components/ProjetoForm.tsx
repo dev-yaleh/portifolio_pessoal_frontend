@@ -4,6 +4,7 @@ import {
   updateProjeto,
   uploadProjetoImagem,
   uploadProjetoVideo,
+  getProjetoById,
 } from '../api/api';
 import type { Categoria, Projeto } from '../types';
 
@@ -67,16 +68,27 @@ export default function ProjetoForm({ projeto, categorias, onSaved, onCancel }: 
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setSaving(true);
-    setError('');
+  e.preventDefault();
+  setSaving(true);
+  setError('');
+
+  try {
+    // Busca o estado atual de images/videos direto do backend,
+    // pra não sobrescrever com array vazio ao salvar os campos de texto.
+    let currentImages: string[] = projeto?.images ?? [];
+    let currentVideos: string[] = projeto?.videos ?? [];
+    if (savedId) {
+      const { data } = await getProjetoById(savedId);
+      currentImages = data.images ?? [];
+      currentVideos = data.videos ?? [];
+    }
 
     const payload = {
       name: form.name,
       description: form.description,
       techs: form.techs.split(',').map((t) => t.trim()).filter(Boolean),
-      images: [] as string[],
-      videos: [] as string[],
+      images: currentImages,
+      videos: currentVideos,
       liveLink: form.liveLink,
       repoLink: form.repoLink,
       featured: form.featured,
@@ -84,21 +96,20 @@ export default function ProjetoForm({ projeto, categorias, onSaved, onCancel }: 
       ...(form.categoriaId ? { categoria: { id: Number(form.categoriaId) } } : {}),
     };
 
-    try {
-      if (isEditing || savedId) {
-        const { data } = await updateProjeto({ id: savedId as number, ...payload });
-        setSavedId(data.id);
-      } else {
-        const { data } = await createProjeto(payload);
-        setSavedId(data.id);
-      }
-      onSaved();
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Erro ao salvar o projeto.');
-    } finally {
-      setSaving(false);
+    if (isEditing || savedId) {
+      const { data } = await updateProjeto({ id: savedId as number, ...payload });
+      setSavedId(data.id);
+    } else {
+      const { data } = await createProjeto(payload);
+      setSavedId(data.id);
     }
+    onSaved();
+  } catch (err: any) {
+    setError(err.response?.data?.message || 'Erro ao salvar o projeto.');
+  } finally {
+    setSaving(false);
   }
+}
 
   async function handleUploadImagem() {
     if (!savedId || !imageFile) return;

@@ -62,7 +62,7 @@ function MarqueeItem({ name, icon }: TechItem) {
 export default function TechStack() {
   return (
     <>
-      <section id="tech-stacks" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-25">
+    <section id="stack" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-25">
       {/* <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"> */}
         <SectionHeading eyebrow="[ 03 ] Tech Stacks" title="Ferramentas" highlight="do dia a dia"/>
 

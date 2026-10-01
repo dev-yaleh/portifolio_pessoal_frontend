@@ -1,19 +1,19 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400..700&display=swap');
 
 /* Tokens de design do projeto — equivalente ao antigo tailwind.config.js
    No Tailwind v4, cada variável --color-* vira automaticamente as classes
    utilitárias (bg-darkBg, text-brandBlue, border-borderCol, etc.) */
 @theme {
-  --color-darkBg: #050811; /*#070c18*/
+  --color-darkBg: #070c18;
   --color-cardBg: #0f172a;
   --color-borderCol: #1A2643; /* #1e293b */
-  --color-brandBlue: oklch(72% .15 235); /*#12B2F4*/
-  --color-brandOrange: oklch(0.72 0.17 55); /*#F3821D*/
+  --color-brandBlue: #00a2ff;
+  --color-brandOrange: #e0682b;
 
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;/* títulos, hero */
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;      /* tech stack, badges */
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Black Ops One", ui-sans-serif, system-ui, sans-serif;/* títulos, hero */
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;      /* tech stack, badges */
+  --font-sans: "font-geist-sans" {/*"DM Sans"*/}, ui-sans-serif, system-ui, sans-serif;
 
   --animate-pulseSlow: pulseSlow 2s ease-in-out infinite;
   --animate-floatSlow: floatSlow 12s ease-in-out infinite; /* blobs do Hero */
@@ -63,8 +63,9 @@
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Black Ops One", sans-serif;
   background-color: #070c18;
+  color: #f1f5f9;
 }
 
 ::-webkit-scrollbar { width: 8px; }
@@ -75,13 +76,34 @@ body {
 ::selection { background: #00a2ff; color: white; }
 
 .glass-card {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(30, 41, 59, 0.8);
+  background: rgba(11, 18, 34, 0.72);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .glow-blue { box-shadow: 0 0 30px rgba(0, 162, 255, 0.15); }
 .glow-orange { box-shadow: 0 0 30px rgba(224, 104, 43, 0.15); }
+
+.project-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(260px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(0, 162, 255, 0.13), transparent 72%);
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+.project-glow { position: relative; }
+.project-glow:hover::after, .project-glow:focus-visible::after { opacity: 1; }
 
 .focus-ring:focus-visible {
   outline: 2px solid #00a2ff;

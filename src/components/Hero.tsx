@@ -36,6 +36,8 @@ function useCountUp(target: number | null, duration = 1200) {
 
   useEffect(() => {
     if (target === null) return;
+
+    const targetValue = target;
     let start: number | null = null;
     let frame: number;
 
@@ -43,7 +45,7 @@ function useCountUp(target: number | null, duration = 1200) {
       if (start === null) start = ts;
       const progress = Math.min((ts - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3); // ease-out cúbico
-      setValue(Math.round(eased * target));
+      setValue(Math.round(eased * targetValue));
       if (progress < 1) frame = requestAnimationFrame(step);
     }
 
@@ -136,9 +138,9 @@ export default function Hero() {
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-4 text-center lg:text-left">
-            <p className="lg:text-2xl text-orange-400">Oi, eu sou</p>
+            <p className="lg:text-2xl text-orange-400 font-mono">Oi, eu sou</p>
 
-            <h1 className="text-white">
+            <h1 className="text-white ">
               Yaleh{' '}
               <span className="text-gradient">
                 Nóbrega
@@ -147,11 +149,11 @@ export default function Hero() {
 
             <div className="w-127 h-[2px] mx-auto lg:mx-0 divider-gradient" />
 
-            <h2 className="text-lg sm:text-2xl font-light min-h-[2.5rem] text-gradient font-mono">
+            <h2 className="text-lg sm:text-2xl font-light min-h-[2.5rem] text-gradient font-sans">
               <TypedText strings={skills} />
             </h2>
 
-            <p className="text-lg text-white max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed mt-6">
+            <p className="text-lg text-white max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed mt-6 font-mono">
               Transformo ideias em soluções digitais modernas, funcionais e escaláveis. Desenvolvendo aplicações reais, complexas e desafiadoras. Desde backend seguros e escaláveis até interfaces modernas e intuitivas.
             </p>
 

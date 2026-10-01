@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
+import logo from '../assets/YN. rubiks e black ops one.png'
 
 const links = [
   { href: '#sobre', label: 'Sobre' },
@@ -38,21 +39,13 @@ export default function Navbar() {
       }`}
         //? "glass-card border-b border-border py-3" : "py-5"      }`}
       >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-22">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-brandBlue to-brandOrange p-0.5 shadow-lg group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center font-bold text-brandBlue text-lg">
-              YN
-            </div>
-          </div>
-          <div>
-            <span className="font-bold text-xl tracking-tight text-white block leading-none">Yaleh Nóbrega</span>
-            <span className="text-base text-brandOrange font-medium tracking-wide block -mt-0.1">Full Stack Developer</span>
-          </div>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-16 ">
+        <Link to="/" className="flex items-center gap-1 group">
+          <img className="h-6 w-auto sm:h-8 object-contain transition-transform duration-300 group-hover:scale-105" src={logo} alt="YN. logo"/>
         </Link>
 
         {onHome && (
-          <nav className="hidden md:flex items-center gap-1 text-lg font-medium text-slate-300">
+          <nav className="hidden md:flex items-center gap-0 text-base font-medium text-slate-100 uppercase font-mono ">
             {links.map((l, i) => (
               <motion.a
                 key={l.href}
@@ -64,14 +57,14 @@ export default function Navbar() {
               >
                 {l.label}
                 {/* sublinhado que "desliza" da esquerda para a direita no hover */}
-                <span className="absolute inset-x-4 -bottom-0.5 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-brandBlue to-brandOrange transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="absolute inset-x-4 bottom-0.5 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-brandBlue to-brandOrange transition-transform duration-300 group-hover:scale-x-100" />
               </motion.a>
             ))}
           </nav>
         )}
 
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+          <div className="hidden sm:flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulseSlow" /> Online
           </div>
           <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>

@@ -5,6 +5,7 @@ import ProjectModal from './ProjectModal';
 import { SectionTitle } from './Reveal';
 import type { Categoria, Projeto } from '../types';
 import { Reveal, SectionHeading} from '.././components/Reveal'; 
+import { AnimatePresence, motion } from 'motion/react';
 
 const LIMIT = 6;
 
@@ -106,9 +107,13 @@ export default function ProjectsSection({ onTotalChange }: ProjectsSectionProps)
       ) : (
         <>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projetos.map((p) => (
-              <ProjectCard key={p.id} projeto={p} onOpen={setSelected} />
-            ))}
+            <AnimatePresence mode="popLayout">
+              {projetos.map((p) => (
+                <motion.div key={p.id} layout initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96 }} transition={{ duration: 0.25 }} className="min-w-0">
+                  <ProjectCard projeto={p} onOpen={setSelected} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
 
           {totalPages > 1 && (

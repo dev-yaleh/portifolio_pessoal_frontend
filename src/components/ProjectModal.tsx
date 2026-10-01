@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Projeto } from '../types';
+import { motion } from 'motion/react';
 
 interface ProjectModalProps {
   projeto: Projeto | null;
@@ -22,13 +23,18 @@ export default function ProjectModal({ projeto, onClose }: ProjectModalProps) {
   const current = gallery[activeMedia];
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
       onClick={onClose}
+      role="presentation"
     >
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 24 }}
         className="glass-card rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-borderCol"
         onClick={(e) => e.stopPropagation()}
+        role="dialog" aria-modal="true" aria-labelledby="project-modal-title"
       >
         <div className="flex flex-wrap gap-2 mb-3 px-6 pt-6">
           {projeto.techs?.map((t) => (
@@ -39,7 +45,7 @@ export default function ProjectModal({ projeto, onClose }: ProjectModalProps) {
         </div>
 
         <div className="px-6 flex items-center justify-between">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{projeto.name}</h2>
+          <h2 id="project-modal-title" className="text-2xl sm:text-3xl font-extrabold text-white">{projeto.name}</h2>
           <button onClick={onClose} className="text-slate-400 hover:text-brandOrange focus-ring rounded px-2" aria-label="Fechar">
             <i className="fa-solid fa-xmark text-xl" />
           </button>
@@ -113,7 +119,7 @@ export default function ProjectModal({ projeto, onClose }: ProjectModalProps) {
             </span>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
