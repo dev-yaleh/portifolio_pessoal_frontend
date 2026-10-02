@@ -80,7 +80,7 @@ body {
 .project-gallery-scroll::-webkit-scrollbar-thumb:horizontal { background: #00a2ff; border-radius: 4px; }
 .project-gallery-scroll::-webkit-scrollbar-thumb:horizontal:hover { background: #38bdf8; }
 
-::selection { background: #00a2ff; color: white; }
+::selection { background: var(--color-brandOrange); color: var(--color-darkBg); }
 
 .glass-card {
   background: rgba(11, 18, 34, 0.72);
