@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import ProjectsPage from './pages/ProjectsPage';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <div className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/projetos" element={<ProjectsPage />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route
             path="/admin"

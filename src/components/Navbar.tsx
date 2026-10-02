@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
@@ -39,7 +40,7 @@ export default function Navbar() {
       }`}
         //? "glass-card border-b border-border py-3" : "py-5"      }`}
       >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-16 ">
+      <div className="mx-auto flex w-full max-w-[1596px] items-center justify-between px-4 sm:px-6 lg:px-8 h-16 ">
         <Link to="/" className="flex items-center gap-1 group">
           <img className="h-6 w-auto sm:h-8 object-contain transition-transform duration-300 group-hover:scale-105" src={logo} alt="YN. logo"/>
         </Link>
@@ -64,9 +65,9 @@ export default function Navbar() {
         )}
 
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono">
+          {/* <div className="hidden sm:flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulseSlow" /> Online
-          </div>
+          </div> */}
           <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             <Link
               to="/admin/login"

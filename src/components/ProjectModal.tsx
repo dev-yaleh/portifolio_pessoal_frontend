@@ -62,7 +62,7 @@ export default function ProjectModal({ projeto, onClose }: ProjectModalProps) {
         )}
 
         {gallery.length > 1 && (
-          <div className="flex gap-2 px-6 mt-3 overflow-x-auto pb-1">
+          <div className="project-gallery-scroll flex gap-2 px-6 mt-3 overflow-x-auto pb-1">
             {gallery.map((item, i) => (
               <button
                 key={item.src + i}

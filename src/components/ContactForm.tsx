@@ -1,8 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { enviarContato } from '../api/api';
 import type { ContatoPayload } from '../api/api';
-import { SectionHeading } from './Reveal';
-
+import { Reveal } from './Reveal';
 
 type Status = 'idle' | 'sending' | 'ok' | 'error';
 
@@ -10,7 +9,6 @@ export default function ContactForm() {
   const [form, setForm] = useState<ContatoPayload>({ nome: '', email: '', mensagem: '' });
   const [status, setStatus] = useState<Status>('idle');
   const [feedback, setFeedback] = useState('');
-
   function update(field: keyof ContatoPayload, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
@@ -34,169 +32,150 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="contato" className="relative py-20 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mb-14">
-          <SectionHeading eyebrow="[ 04 ] Contato" title="Vamos" highlight="conversar?"/>
-          <p className="text-slate-400 mt-3 font-light max-w-max">
-            Tem um projeto em mente ou uma oportunidade? Me manda uma mensagem.
-          </p>
-        </div>
+    <section
+      id="contato"
+      className="relative isolate scroll-mt-20 overflow-hidden border-b border-borderCol bg-darkBg px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-36"
+    >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -right-48 top-0 h-[32rem] w-[32rem] rounded-full bg-brandOrange/[0.07] blur-[150px]" />
+        <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(to_right,rgba(148,163,184,.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,.08)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)]" />
+      </div>
 
-        {/* Grid principal: formulário à esquerda, informações à direita */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-          {/* Coluna do formulário */}
-          <form
-            onSubmit={handleSubmit}
-            className="lg:col-span-3 glass-card rounded-2xl border border-borderCol p-6 sm:p-8 space-y-5"
-          >
-            <div className="grid sm:grid-cols-2 gap-5">
-              <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                  Nome
-                </label>
-                <input
-                  required
-                  value={form.nome}
-                  onChange={(e) => update('nome', e.target.value)}
-                  className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-                  placeholder="Nome Completo"
-                />
-              </div>
+      <div className="mx-auto max-w-[1500px]">
+        <Reveal className="flex items-center justify-between border-b border-white/15 pb-4 font-mono text-[9px] uppercase tracking-[0.2em] text-slate-400 sm:text-[10px]">
+          <span><span className="text-brandOrange">04</span> / CONTATO</span>
+          <span className="hidden sm:inline">Disponível para novas conversas</span>
+        </Reveal>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                  E-mail
-                </label>
-                <input
-                  required
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => update('email', e.target.value)}
-                  className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-                  placeholder="seuemail@exemplo.com"
-                />
-              </div>
-            </div>
+        <div className="grid gap-12 pt-12 sm:pt-16 lg:grid-cols-12 lg:gap-10 lg:pt-20">
+          <Reveal from="left" className="lg:col-span-6">
+            <p className="mb-5 font-mono text-[9px] uppercase tracking-[0.2em] text-slate-400 sm:text-[10px]">
+              Uma boa conversa pode virar um grande projeto
+            </p>
+            <h2 className="font-display text-[clamp(3.25rem,8.2vw,8rem)] font-bold uppercase leading-[0.78] tracking-[-0.075em] text-white">
+              Vamos<br />
+              <span className="text-brandBlue">criar</span><br />
+              juntos<span className="text-brandOrange">?</span>
+            </h2>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                Mensagem
-              </label>
-              <textarea
-                required
-                rows={5}
-                value={form.mensagem}
-                onChange={(e) => update('mensagem', e.target.value)}
-                className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring resize-none"
-                placeholder="Escreva sua mensagem aqui..."
-              />
-            </div>
+            <p className="mt-8 max-w-lg text-base leading-relaxed text-slate-300 sm:mt-10 sm:text-lg">
+              Tem um projeto em mente ou uma oportunidade? Envie uma mensagem pelo formulário ou fale comigo diretamente. Estou aberta a conversar sobre ideias, desafios e novas possibilidades.
+            </p>
 
-            {feedback && (
-              <p className={`text-sm ${status === 'ok' ? 'text-emerald-400' : 'text-red-400'}`}>{feedback}</p>
-            )}
-
-            <button
-              type="submit"
-              disabled={status === 'sending'}
-              className="w-full px-6 py-3.5 rounded-xl bg-brandBlue text-white font-semibold shadow-lg shadow-brandBlue/20 hover:bg-sky-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-            >
-              {status === 'sending' ? (
-                'Enviando...'
-              ) : (
-                <>
-                  <i className="fa-solid fa-paper-plane" /> Enviar mensagem
-                </>
-              )}
-            </button>
-          </form>
-
-          {/* Coluna de informações */}
-          <div className="lg:col-span-2 space-y-5">
-            <div className="glass-card rounded-2xl border border-borderCol p-8.5 space-y-5">
-              <h3 className="font-mono text-sm text-brandBlue uppercase tracking-wider">
-                Canais diretos
-              </h3>
-
-              {/* Links de contato: LinkedIn, GitHub e email, com ícones e hover effects. Cada link é um <a> com target="_blank" para abrir em nova aba. */}
-              <a
-                href="https://www.linkedin.com/in/yalehnobrega/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 group"
-              >
-                <span className="w-11 h-11 rounded-xl bg-brandBlue/10 border border-brandBlue/30 flex items-center justify-center text-brandBlue group-hover:bg-brandBlue group-hover:text-white transition-all shrink-0">
-                  <i className="fa-brands fa-linkedin" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-xs text-slate-500 uppercase tracking-wide">LinkedIn</p>
-                  <p className="text-slate-200 text-sm truncate group-hover:text-brandBlue transition-colors">
-                    Yaleh Nóbrega
-                  </p>
-                </div>
-              </a>
-
+            <div className="mt-8 flex flex-wrap items-center gap-3" aria-label="Redes sociais">
               <a
                 href="https://github.com/dev-yaleh"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 group"
+                aria-label="GitHub de Yaleh Nóbrega"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-slate-300 transition hover:border-brandBlue hover:text-brandBlue focus-ring"
               >
-                <span className="w-11 h-11 rounded-xl bg-brandOrange/10 border border-brandOrange/30 flex items-center justify-center text-brandOrange group-hover:bg-brandOrange group-hover:text-white transition-all shrink-0">
-                  <i className="fa-brands fa-github" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-xs text-slate-500 uppercase tracking-wide">GitHub</p>
-                  <p className="text-slate-200 text-sm truncate group-hover:text-brandOrange transition-colors">
-                    dev-yaleh
-                  </p>
-                </div>
+                <i className="fa-brands fa-github" aria-hidden="true" />
               </a>
-
+              <a
+                href="https://www.linkedin.com/in/yalehnobrega/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn de Yaleh Nóbrega"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-slate-300 transition hover:border-brandBlue hover:text-brandBlue focus-ring"
+              >
+                <i className="fa-brands fa-linkedin-in" aria-hidden="true" />
+              </a>
               <a
                 href="mailto:dev.yaleh@gmail.com"
-                className="flex items-center gap-4 group"
-              >            
-                <span className="w-11 h-11 rounded-xl bg-brandBlue/10 border border-brandBlue/30 flex items-center justify-center text-brandBlue group-hover:bg-brandBlue group-hover:text-white transition-all shrink-0">
-                  <i className="fa-solid fa-envelope" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-xs text-slate-500 uppercase tracking-wide">E-mail</p>
-                  <p className="text-slate-200 text-sm truncate group-hover:text-brandBlue transition-colors">
-                    dev.yaleh@gmail.com
-                  </p>
-                </div>
-              </a>
-
-              <a
-                href="https://share.google/VlIuDgeEKFE90sIGu"
-                className="flex items-center gap-4 group"
+                aria-label="Enviar e-mail para Yaleh Nóbrega"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-slate-300 transition hover:border-brandOrange hover:text-brandOrange focus-ring"
               >
-                <span className="w-11 h-11 rounded-xl bg-brandOrange/10 border border-brandOrange/30 flex items-center justify-center text-brandOrange group-hover:bg-brandOrange group-hover:text-white transition-all shrink-0">
-                  <i className="fa-solid fa-location-dot" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-xs text-slate-500 uppercase tracking-wide">Localização</p>
-                  <p className="text-slate-200 text-sm truncate group-hover:text-brandOrange transition-colors">
-                    Santos, SP, Brasil
-                  </p>
-                </div>
+                <i className="fa-regular fa-envelope" aria-hidden="true" />
               </a>
-            
-              <div className="flex items-center gap-4">
-                <span className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
-                  <i className="fa-solid fa-clock" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-xs text-slate-500 uppercase tracking-wide">Disponibilidade</p>
-                  <p className="text-slate-200 text-sm">Respondo em até 48h</p>
-                </div>
-              </div>
             </div>
-          </div>
+
+            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/15 pt-5 font-mono text-[9px] uppercase tracking-[0.15em] text-slate-500 sm:text-[10px]">
+              <a href="https://share.google/VlIuDgeEKFE90sIGu" className="transition hover:text-brandOrange">
+                Santos, SP · Brasil
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal from="up" delay={0.12} className="lg:col-span-5 lg:col-start-8">
+            <div className="border-t border-white/20 py-6 sm:py-7">
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-brandOrange sm:text-[10px]">Formulário de contato</p>
+                  <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">Escreva sua mensagem.</h3>
+                </div>
+                <span className="mt-1 font-mono text-[9px] uppercase tracking-[0.15em] text-slate-500">01—03</span>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="contact-name" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.16em] text-slate-400">Nome</label>
+                    <input
+                      id="contact-name"
+                      name="nome"
+                      autoComplete="name"
+                      required
+                      value={form.nome}
+                      onChange={(e) => update('nome', e.target.value)}
+                      className="w-full border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none"
+                      placeholder="Seu nome"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-email" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.16em] text-slate-400">E-mail</label>
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      value={form.email}
+                      onChange={(e) => update('email', e.target.value)}
+                      className="w-full border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none"
+                      placeholder="voce@exemplo.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="contact-message" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.16em] text-slate-400">Mensagem</label>
+                  <textarea
+                    id="contact-message"
+                    name="mensagem"
+                    required
+                    rows={3}
+                    value={form.mensagem}
+                    onChange={(e) => update('mensagem', e.target.value)}
+                    className="w-full resize-y border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none"
+                    placeholder="Conte um pouco sobre o que você tem em mente..."
+                  />
+                </div>
+
+                {feedback && (
+                  <p role="status" aria-live="polite" className={`text-sm ${status === 'ok' ? 'text-emerald-400' : 'text-red-400'}`}>
+                    {feedback}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="group flex w-full items-center justify-between border border-brandBlue/50 px-5 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-white transition hover:bg-brandBlue hover:text-darkBg disabled:cursor-wait disabled:opacity-50 focus-ring sm:w-auto sm:min-w-64"
+                >
+                  <span>{status === 'sending' ? 'Enviando mensagem...' : 'Enviar mensagem'}</span>
+                  <span aria-hidden="true" className="text-lg transition-transform group-hover:translate-x-1">↗</span>
+                </button>
+                <div className="border-t border-white/15 pt-4 font-mono text-[9px] uppercase tracking-[0.15em] text-slate-500 sm:text-[10px]">
+                  Retorno em até 48h
+                </div>
+                
+              </form>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
   );
 }
+
