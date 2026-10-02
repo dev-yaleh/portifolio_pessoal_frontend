@@ -142,165 +142,126 @@ export default function ProjetoForm({ projeto, categorias, onSaved, onCancel }: 
   }
 
   return (
-    <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Nome</label>
-          <input
-            required
-            value={form.name}
-            onChange={(e) => update('name', e.target.value)}
-            className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-          />
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Descrição</label>
-          <textarea
-            required
-            rows={4}
-            value={form.description}
-            onChange={(e) => update('description', e.target.value)}
-            className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring resize-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-            Techs (separadas por vírgula)
-          </label>
-          <input
-            value={form.techs}
-            onChange={(e) => update('techs', e.target.value)}
-            placeholder="React, NestJS, MySQL"
-            className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-          />
-        </div>
-
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Link ativo</label>
-            <input
-              value={form.liveLink}
-              onChange={(e) => update('liveLink', e.target.value)}
-              placeholder="https://..."
-              className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-            />
+    <div className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <section className="space-y-5">
+          <div className="flex items-center gap-3 border-b border-white/15 pb-3">
+            <span className="font-mono text-[9px] text-brandBlue">01 /</span>
+            <h4 className="font-mono text-[9px] uppercase tracking-[0.18em] text-slate-400">Informações do projeto</h4>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label htmlFor="project-name" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400">Nome do projeto</label>
+              <input id="project-name" required value={form.name} onChange={(e) => update('name', e.target.value)} placeholder="Ex.: Minha aplicação" className="w-full border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none" />
+            </div>
+            <div>
+              <label htmlFor="project-techs" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400">Tecnologias · separadas por vírgula</label>
+              <input id="project-techs" value={form.techs} onChange={(e) => update('techs', e.target.value)} placeholder="React, NestJS, MySQL" className="w-full border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none" />
+            </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Repositório</label>
-            <input
-              value={form.repoLink}
-              onChange={(e) => update('repoLink', e.target.value)}
-              placeholder="https://github.com/..."
-              className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-            />
+            <label htmlFor="project-description" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400">Descrição</label>
+            <textarea id="project-description" required rows={4} value={form.description} onChange={(e) => update('description', e.target.value)} placeholder="Apresente o objetivo e os principais recursos do projeto." className="w-full resize-y border-b border-white/20 bg-transparent px-0 py-3 text-sm leading-relaxed text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none" />
           </div>
-        </div>
+        </section>
 
-        <div className="grid sm:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Categoria</label>
-            <select
-              value={form.categoriaId}
-              onChange={(e) => update('categoriaId', e.target.value)}
-              className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-            >
-              <option value="">Sem categoria</option>
-              {categorias.map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
-              ))}
-            </select>
+        <section className="space-y-5">
+          <div className="flex items-center gap-3 border-b border-white/15 pb-3">
+            <span className="font-mono text-[9px] text-brandOrange">02 /</span>
+            <h4 className="font-mono text-[9px] uppercase tracking-[0.18em] text-slate-400">Links e organização</h4>
           </div>
-          <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Ordem</label>
-            <input
-              type="number"
-              value={form.order}
-              onChange={(e) => update('order', e.target.value)}
-              className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-            />
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label htmlFor="project-live" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400">Link ativo</label>
+              <input id="project-live" value={form.liveLink} onChange={(e) => update('liveLink', e.target.value)} placeholder="https://..." className="w-full border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none" />
+            </div>
+            <div>
+              <label htmlFor="project-repo" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400">Repositório</label>
+              <input id="project-repo" value={form.repoLink} onChange={(e) => update('repoLink', e.target.value)} placeholder="https://github.com/..." className="w-full border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none" />
+            </div>
           </div>
-          <label className="flex items-center gap-2 self-end pb-3 text-sm text-slate-300">
-            <input
-              type="checkbox"
-              checked={form.featured}
-              onChange={(e) => update('featured', e.target.checked)}
-              className="accent-brandBlue w-4 h-4"
-            />
-            Destacar
-          </label>
-        </div>
+          <div className="grid gap-5 sm:grid-cols-3">
+            <div>
+              <label htmlFor="project-category" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400">Categoria</label>
+              <select id="project-category" value={form.categoriaId} onChange={(e) => update('categoriaId', e.target.value)} className="w-full border-b border-white/20 bg-darkBg px-0 py-3 text-sm text-white focus:border-brandBlue focus:outline-none">
+                <option value="">Sem categoria</option>
+                {categorias.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="project-order" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400">Ordem de exibição</label>
+              <input id="project-order" type="number" value={form.order} onChange={(e) => update('order', e.target.value)} className="w-full border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white focus:border-brandBlue focus:outline-none" />
+            </div>
+            <label className="flex cursor-pointer items-center gap-3 self-end pb-3 font-mono text-[9px] uppercase tracking-[0.15em] text-slate-300">
+              <input type="checkbox" checked={form.featured} onChange={(e) => update('featured', e.target.checked)} className="h-4 w-4 accent-brandBlue" />
+              Projeto em destaque
+            </label>
+          </div>
+        </section>
 
-        {error && <p className="text-red-400 text-sm">{error}</p>}
+        {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
 
-        <div className="flex gap-3 pt-2">
-          <button
-            type="submit"
-            disabled={saving}
-            className="px-5 py-2.5 rounded-xl bg-brandBlue text-white font-semibold text-sm hover:bg-sky-500 transition-all disabled:opacity-50"
-          >
+        <div className="flex flex-wrap gap-3 border-t border-white/15 pt-5">
+          <button type="submit" disabled={saving} className="group inline-flex min-w-48 items-center justify-between gap-5 border border-brandBlue/50 px-5 py-3 font-mono text-[9px] uppercase tracking-[0.15em] text-white transition hover:bg-brandBlue hover:text-darkBg disabled:cursor-wait disabled:opacity-50 focus-ring">
             {saving ? 'Salvando...' : isEditing ? 'Salvar alterações' : savedId ? 'Atualizar dados' : 'Criar projeto'}
+            <span aria-hidden="true" className="text-base transition-transform group-hover:translate-x-1">↗</span>
           </button>
-          <button
-            type="button"
-            onClick={onCancel}
-            className="px-5 py-2.5 rounded-xl border border-borderCol text-slate-300 text-sm hover:text-white transition-all"
-          >
-            Fechar
-          </button>
+          <button type="button" onClick={onCancel} className="border border-white/15 px-5 py-3 font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400 transition hover:border-white/40 hover:text-white focus-ring">Fechar</button>
         </div>
       </form>
 
       {/* Upload de mídia — só disponível depois que o projeto tem um ID (criado ou em edição) */}
-      <div className="pt-6 border-t border-borderCol space-y-4">
-        <h4 className="text-xs font-semibold text-brandOrange uppercase tracking-wider">Mídia (fotos e vídeos)</h4>
+      <section className="space-y-5 border-t border-white/15 pt-6">
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-[9px] text-brandBlue">03 /</span>
+          <h4 className="font-mono text-[9px] uppercase tracking-[0.18em] text-slate-400">Imagens e vídeos</h4>
+        </div>
         {!savedId ? (
-          <p className="text-xs text-slate-500">Salve o projeto primeiro para poder enviar fotos e vídeos.</p>
+          <p className="text-sm text-slate-500">Salve o projeto primeiro para liberar o envio de arquivos.</p>
         ) : (
           <>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div className="space-y-3 border-b border-white/10 pb-4">
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
-                  className="w-full text-xs text-slate-400"
+                  className="w-full text-xs text-slate-400 file:mr-3 file:border-0 file:bg-white/5 file:px-3 file:py-2 file:font-mono file:text-[9px] file:uppercase file:tracking-wider file:text-slate-300"
                 />
                 <button
                   type="button"
                   onClick={handleUploadImagem}
                   disabled={!imageFile || uploadingMedia}
-                  className="w-full px-4 py-2 rounded-lg border border-brandBlue/40 text-brandBlue text-xs font-semibold hover:bg-brandBlue hover:text-white transition-all disabled:opacity-40"
+                  className="inline-flex items-center gap-2 border border-brandBlue/40 px-4 py-2 font-mono text-[9px] uppercase tracking-wider text-brandBlue transition hover:bg-brandBlue hover:text-darkBg disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  Enviar foto
+                  <i className="fa-solid fa-arrow-up-from-bracket" aria-hidden="true" /> Enviar foto
                 </button>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3 border-b border-white/10 pb-4">
                 <input
                   type="file"
                   accept="video/*"
                   onChange={(e) => setVideoFile(e.target.files?.[0] ?? null)}
-                  className="w-full text-xs text-slate-400"
+                  className="w-full text-xs text-slate-400 file:mr-3 file:border-0 file:bg-white/5 file:px-3 file:py-2 file:font-mono file:text-[9px] file:uppercase file:tracking-wider file:text-slate-300"
                 />
                 <button
                   type="button"
                   onClick={handleUploadVideo}
                   disabled={!videoFile || uploadingMedia}
-                  className="w-full px-4 py-2 rounded-lg border border-brandOrange/40 text-brandOrange text-xs font-semibold hover:bg-brandOrange hover:text-white transition-all disabled:opacity-40"
+                  className="inline-flex items-center gap-2 border border-brandOrange/40 px-4 py-2 font-mono text-[9px] uppercase tracking-wider text-brandOrange transition hover:bg-brandOrange hover:text-darkBg disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  Enviar vídeo
+                  <i className="fa-solid fa-arrow-up-from-bracket" aria-hidden="true" /> Enviar vídeo
                 </button>
               </div>
             </div>
-            {mediaMsg && <p className="text-xs text-slate-400">{mediaMsg}</p>}
+            {mediaMsg && <p role="status" className="text-sm text-slate-400">{mediaMsg}</p>}
             {((projeto?.images?.length ?? 0) > 0 || (projeto?.videos?.length ?? 0) > 0) && (
-              <div className="flex flex-wrap gap-2 pt-2">
+              <div className="flex flex-wrap gap-3 pt-2">
                 {projeto?.images?.map((src) => (
-                  <img key={src} src={src} alt="" className="w-16 h-16 object-cover rounded-lg border border-borderCol" />
+                  <img key={src} src={src} alt="" className="h-16 w-20 border border-white/15 object-cover" />
                 ))}
                 {projeto?.videos?.map((src) => (
-                  <div key={src} className="w-16 h-16 rounded-lg border border-borderCol bg-darkBg flex items-center justify-center text-slate-500">
+                  <div key={src} className="flex h-16 w-20 items-center justify-center border border-white/15 bg-white/[0.03] text-slate-500">
                     <i className="fa-solid fa-video text-xs" />
                   </div>
                 ))}
@@ -308,7 +269,7 @@ export default function ProjetoForm({ projeto, categorias, onSaved, onCancel }: 
             )}
           </>
         )}
-      </div>
+      </section>
     </div>
   );
 }

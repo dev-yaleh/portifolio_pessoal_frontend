@@ -34,39 +34,54 @@ export default function CategoriaForm({ categoria, onSaved, onCancel }: Categori
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Nome</label>
-        <input
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-        />
-      </div>
-      <div>
-        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Descrição</label>
-        <input
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full bg-darkBg border border-borderCol rounded-xl px-4 py-3 text-slate-200 focus-ring"
-        />
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <section className="space-y-5">
+        <div className="flex items-center gap-3 border-b border-white/15 pb-3">
+          <span className="font-mono text-[9px] text-brandBlue">01 /</span>
+          <h4 className="font-mono text-[9px] uppercase tracking-[0.18em] text-slate-400">Dados da categoria</h4>
+        </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="category-name" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400">Nome</label>
+            <input
+              id="category-name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Ex.: Desenvolvimento web"
+              className="w-full border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none"
+            />
+          </div>
+          <div>
+            <label htmlFor="category-description" className="mb-2 block font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400">Descrição <span className="text-slate-600">· opcional</span></label>
+            <textarea
+              id="category-description"
+              rows={1}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Uma breve descrição"
+              className="w-full resize-y border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white placeholder:text-slate-600 focus:border-brandBlue focus:outline-none"
+            />
+          </div>
+        </div>
+      </section>
 
-      <div className="flex gap-3 pt-2">
+      {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
+
+      <div className="flex flex-wrap gap-3 border-t border-white/15 pt-5">
         <button
           type="submit"
           disabled={saving}
-          className="px-5 py-2.5 rounded-xl bg-brandBlue text-white font-semibold text-sm hover:bg-sky-500 transition-all disabled:opacity-50"
+          className="group inline-flex min-w-48 items-center justify-between gap-5 border border-brandBlue/50 px-5 py-3 font-mono text-[9px] uppercase tracking-[0.15em] text-white transition hover:bg-brandBlue hover:text-darkBg disabled:cursor-wait disabled:opacity-50 focus-ring"
         >
           {saving ? 'Salvando...' : isEditing ? 'Salvar alterações' : 'Criar categoria'}
+          <span aria-hidden="true" className="text-base transition-transform group-hover:translate-x-1">↗</span>
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 rounded-xl border border-borderCol text-slate-300 text-sm hover:text-white transition-all"
+          className="border border-white/15 px-5 py-3 font-mono text-[9px] uppercase tracking-[0.15em] text-slate-400 transition hover:border-white/40 hover:text-white focus-ring"
         >
           Cancelar
         </button>
