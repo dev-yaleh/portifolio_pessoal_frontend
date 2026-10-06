@@ -78,7 +78,7 @@ export default function CometCursor() {
         context.shadowBlur = 16;
 
         if (points.length > 1) {
-          let start = points[0];
+          let start: { x: number; y: number } = points[0];
           for (let index = 1; index < points.length; index += 1) {
             const point = points[index];
             const next = points[index + 1];
