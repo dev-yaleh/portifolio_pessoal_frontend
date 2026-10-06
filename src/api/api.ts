@@ -12,6 +12,15 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
 export const api = axios.create({ baseURL: API_URL });
 
+export const warmUpApi = async () => {
+  try {
+    await api.get('/health', { timeout: 65_000 });
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 // Anexa o token automaticamente. Importante: o backend já retorna o token
 // PRONTO com o prefixo "Bearer " embutido (ver AuthService.login), então
 // aqui só repassamos o valor salvo, sem concatenar "Bearer " de novo.

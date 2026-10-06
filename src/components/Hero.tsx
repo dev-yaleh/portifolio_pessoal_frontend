@@ -248,7 +248,7 @@ const heroTitleLines = [
   { text: 'Full Stack', className: 'text-brandBlue' },
 ];
 
-const CV_URL = 'https://drive.google.com/uc?export=download&id=12bmNnfhRx9Gtl2pbVPyU-Baxv8FrmZ_6';
+const CV_URL = 'https://drive.google.com/uc?export=download&id=1MF0qRfH6LaewZPGdZYsYiCai0Sqe-6qd';
 const skills = ['React', 'TypeScript', 'Node.js', 'Cloud & APIs'];
 
 const reveal = {
