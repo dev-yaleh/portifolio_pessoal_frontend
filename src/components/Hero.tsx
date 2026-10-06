@@ -241,6 +241,12 @@ import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { FiArrowDown, FiArrowUpRight, FiCoffee, FiFolder, FiGitCommit } from 'react-icons/fi';
 import { getGithubStats, type GithubStats } from '../api/api';
+import TypedText from './TypedText';
+
+const heroTitleLines = [
+  { text: 'Desenvolvedora' },
+  { text: 'Full Stack', className: 'text-brandBlue' },
+];
 
 const CV_URL = 'https://drive.google.com/uc?export=download&id=12bmNnfhRx9Gtl2pbVPyU-Baxv8FrmZ_6';
 const skills = ['React', 'TypeScript', 'Node.js', 'Cloud & APIs'];
@@ -337,9 +343,8 @@ export default function Hero() {
               <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-40" /><span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" /></span>
               Aberta a novas oportunidades
             </motion.div>
-            <motion.h1 variants={reveal} className="font-display text-[clamp(3.5rem,9.3vw,9rem)] font-bold uppercase leading-[0.78] tracking-[-0.075em] text-white">
-              Desenvolvedora<br />
-              <span className="text-brandBlue">Full Stack</span>
+            <motion.h1 aria-label="Desenvolvedora Full Stack" variants={reveal} className="font-display text-[clamp(3.5rem,9.3vw,9rem)] font-bold uppercase leading-[0.78] tracking-[-0.075em] text-white">
+              <TypedText lines={heroTitleLines} typingSpeed={120} erasingSpeed={85} holdDuration={3000} restartDelay={3000} />
             </motion.h1>
             <motion.div variants={reveal} className="mt-7 flex flex-wrap gap-2 sm:mt-8">
               {skills.map((skill) => <span key={skill} className="rounded-full border border-white/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-slate-300 sm:text-[10px]">{skill}</span>)}
