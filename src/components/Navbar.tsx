@@ -41,9 +41,9 @@ export default function Navbar() {
         //? "glass-card border-b border-border py-3" : "py-5"      }`}
       >
       <div className="mx-auto flex w-full max-w-[1596px] items-center justify-between px-4 sm:px-6 lg:px-8 h-16 ">
-        <Link to="/" className="flex items-center gap-1 group">
-          <img className="h-6 w-auto sm:h-8 object-contain transition-transform duration-300 group-hover:scale-105" src={logo} alt="YN. logo"/>
-        </Link>
+        <a href="/#inicio" aria-label="Voltar ao início" className="flex items-center gap-1 group">
+          <img src={logo} alt="YN. logo"className="h-6 w-auto sm:h-8 object-contain transition-transform duration-300 group-hover:scale-105" />
+        </a>
 
         {onHome && (
           <nav className="hidden md:flex items-center gap-0 text-base font-medium text-slate-100 uppercase font-mono ">

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import {
   createProjeto,
   updateProjeto,
@@ -62,6 +62,16 @@ export default function ProjetoForm({ projeto, categorias, onSaved, onCancel }: 
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [uploadingMedia, setUploadingMedia] = useState(false);
   const [mediaMsg, setMediaMsg] = useState('');
+  const [savedImages, setSavedImages] = useState<string[]>(projeto?.images ?? []);
+  const [savedVideos, setSavedVideos] = useState<string[]>(projeto?.videos ?? []);
+  const [mediaToDelete, setMediaToDelete] = useState<{ type: 'image' | 'video'; src: string } | null>(null);
+  const [deletingMedia, setDeletingMedia] = useState(false);
+  const [reorderingMedia, setReorderingMedia] = useState(false);
+
+  useEffect(() => {
+    setSavedImages(projeto?.images ?? []);
+    setSavedVideos(projeto?.videos ?? []);
+  }, [projeto?.id, projeto?.images, projeto?.videos]);
 
   function update<K extends keyof ProjetoFormState>(field: K, value: ProjetoFormState[K]) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -119,6 +129,13 @@ export default function ProjetoForm({ projeto, categorias, onSaved, onCancel }: 
       await uploadProjetoImagem(savedId, imageFile);
       setMediaMsg('Imagem enviada com sucesso!');
       setImageFile(null);
+      try {
+        const { data } = await getProjetoById(savedId);
+        setSavedImages(data.images ?? []);
+        setSavedVideos(data.videos ?? []);
+      } catch {
+        // O upload já foi concluído; a lista será atualizada ao reabrir o projeto.
+      }
     } catch (err: any) {
       setMediaMsg(err.response?.data?.message || 'Erro ao enviar a imagem.');
     } finally {
@@ -134,10 +151,97 @@ export default function ProjetoForm({ projeto, categorias, onSaved, onCancel }: 
       await uploadProjetoVideo(savedId, videoFile);
       setMediaMsg('Vídeo enviado com sucesso!');
       setVideoFile(null);
+      try {
+        const { data } = await getProjetoById(savedId);
+        setSavedImages(data.images ?? []);
+        setSavedVideos(data.videos ?? []);
+      } catch {
+        // O upload já foi concluído; a lista será atualizada ao reabrir o projeto.
+      }
     } catch (err: any) {
       setMediaMsg(err.response?.data?.message || 'Erro ao enviar o vídeo.');
     } finally {
       setUploadingMedia(false);
+    }
+  }
+
+  async function handleDeleteMedia() {
+    if (!savedId || !mediaToDelete) return;
+
+    setDeletingMedia(true);
+    setMediaMsg('');
+    try {
+      const { data: current } = await getProjetoById(savedId);
+      const images = current.images ?? [];
+      const videos = current.videos ?? [];
+      const nextImages = mediaToDelete.type === 'image'
+        ? images.filter((src) => src !== mediaToDelete.src)
+        : images;
+      const nextVideos = mediaToDelete.type === 'video'
+        ? videos.filter((src) => src !== mediaToDelete.src)
+        : videos;
+
+      await updateProjeto({
+        id: savedId,
+        name: current.name,
+        description: current.description,
+        techs: current.techs ?? [],
+        images: nextImages,
+        videos: nextVideos,
+        liveLink: current.liveLink ?? '',
+        repoLink: current.repoLink ?? '',
+        featured: Boolean(current.featured),
+        order: Number(current.order) || 0,
+        ...(current.categoria?.id ? { categoria: { id: current.categoria.id } } : {}),
+      });
+
+      setSavedImages(nextImages);
+      setSavedVideos(nextVideos);
+      setMediaToDelete(null);
+      setMediaMsg(`${mediaToDelete.type === 'image' ? 'Imagem' : 'Vídeo'} removido do projeto.`);
+    } catch (err: any) {
+      setMediaMsg(err.response?.data?.message || 'Não foi possível remover a mídia do projeto.');
+    } finally {
+      setDeletingMedia(false);
+    }
+  }
+
+  async function moveMedia(type: 'image' | 'video', index: number, direction: -1 | 1) {
+    if (!savedId || reorderingMedia) return;
+
+    setReorderingMedia(true);
+    setMediaMsg('');
+    try {
+      const { data: current } = await getProjetoById(savedId);
+      const images = [...(current.images ?? [])];
+      const videos = [...(current.videos ?? [])];
+      const items = type === 'image' ? images : videos;
+      const nextIndex = index + direction;
+
+      if (nextIndex < 0 || nextIndex >= items.length) return;
+
+      [items[index], items[nextIndex]] = [items[nextIndex], items[index]];
+      await updateProjeto({
+        id: savedId,
+        name: current.name,
+        description: current.description,
+        techs: current.techs ?? [],
+        images,
+        videos,
+        liveLink: current.liveLink ?? '',
+        repoLink: current.repoLink ?? '',
+        featured: Boolean(current.featured),
+        order: Number(current.order) || 0,
+        ...(current.categoria?.id ? { categoria: { id: current.categoria.id } } : {}),
+      });
+
+      setSavedImages(images);
+      setSavedVideos(videos);
+      setMediaMsg('Ordem da mídia atualizada.');
+    } catch (err: any) {
+      setMediaMsg(err.response?.data?.message || 'Não foi possível atualizar a ordem da mídia.');
+    } finally {
+      setReorderingMedia(false);
     }
   }
 
@@ -255,21 +359,109 @@ export default function ProjetoForm({ projeto, categorias, onSaved, onCancel }: 
               </div>
             </div>
             {mediaMsg && <p role="status" className="text-sm text-slate-400">{mediaMsg}</p>}
-            {((projeto?.images?.length ?? 0) > 0 || (projeto?.videos?.length ?? 0) > 0) && (
-              <div className="flex flex-wrap gap-3 pt-2">
-                {projeto?.images?.map((src) => (
-                  <img key={src} src={src} alt="" className="h-16 w-20 border border-white/15 object-cover" />
-                ))}
-                {projeto?.videos?.map((src) => (
-                  <div key={src} className="flex h-16 w-20 items-center justify-center border border-white/15 bg-white/[0.03] text-slate-500">
-                    <i className="fa-solid fa-video text-xs" />
+            {(savedImages.length > 0 || savedVideos.length > 0) && (
+              <div className="space-y-3 pt-2">
+                {savedImages.length > 0 && (
+                  <div className="flex flex-wrap gap-3">
+                    {savedImages.map((src, index) => (
+                  <div key={src} className="group relative h-16 w-20 border border-white/15">
+                    <img src={src} alt="Imagem salva no projeto" className="h-full w-full object-cover" />
+                    <div className="absolute inset-x-0 bottom-0 flex justify-between bg-darkBg/90 px-1 py-0.5">
+                      <button type="button" aria-label="Mover imagem para cima" title="Mover para cima" disabled={index === 0 || reorderingMedia} onClick={() => moveMedia('image', index, -1)} className="px-1 text-[10px] text-slate-300 transition hover:text-brandBlue disabled:cursor-not-allowed disabled:opacity-30">
+                        <i className="fa-solid fa-arrow-up" aria-hidden="true" />
+                      </button>
+                      <span className="font-mono text-[8px] text-slate-500">{String(index + 1).padStart(2, '0')}</span>
+                      <button type="button" aria-label="Mover imagem para baixo" title="Mover para baixo" disabled={index === savedImages.length - 1 || reorderingMedia} onClick={() => moveMedia('image', index, 1)} className="px-1 text-[10px] text-slate-300 transition hover:text-brandBlue disabled:cursor-not-allowed disabled:opacity-30">
+                        <i className="fa-solid fa-arrow-down" aria-hidden="true" />
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      aria-label="Excluir imagem do projeto"
+                      onClick={() => setMediaToDelete({ type: 'image', src })}
+                      className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center border border-brandOrange/60 bg-darkBg text-brandOrange transition hover:bg-brandOrange hover:text-darkBg focus-visible:outline focus-visible:outline-2 focus-visible:outline-brandOrange"
+                    >
+                      <i className="fa-solid fa-trash-can text-[10px]" aria-hidden="true" />
+                    </button>
                   </div>
-                ))}
+                    ))}
+                  </div>
+                )}
+                {savedVideos.length > 0 && (
+                  <div className="flex flex-wrap gap-3">
+                    {savedVideos.map((src, index) => (
+                  <div key={src} className="group relative flex h-16 w-20 items-center justify-center border border-white/15 bg-white/[0.03] text-slate-500">
+                    <i className="fa-solid fa-video text-xs" aria-hidden="true" />
+                    <div className="absolute inset-x-0 bottom-0 flex justify-between bg-darkBg/90 px-1 py-0.5">
+                      <button type="button" aria-label="Mover vídeo para cima" title="Mover para cima" disabled={index === 0 || reorderingMedia} onClick={() => moveMedia('video', index, -1)} className="px-1 text-[10px] text-slate-300 transition hover:text-brandBlue disabled:cursor-not-allowed disabled:opacity-30">
+                        <i className="fa-solid fa-arrow-up" aria-hidden="true" />
+                      </button>
+                      <span className="font-mono text-[8px] text-slate-500">{String(index + 1).padStart(2, '0')}</span>
+                      <button type="button" aria-label="Mover vídeo para baixo" title="Mover para baixo" disabled={index === savedVideos.length - 1 || reorderingMedia} onClick={() => moveMedia('video', index, 1)} className="px-1 text-[10px] text-slate-300 transition hover:text-brandBlue disabled:cursor-not-allowed disabled:opacity-30">
+                        <i className="fa-solid fa-arrow-down" aria-hidden="true" />
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      aria-label="Excluir vídeo do projeto"
+                      onClick={() => setMediaToDelete({ type: 'video', src })}
+                      className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center border border-brandOrange/60 bg-darkBg text-brandOrange transition hover:bg-brandOrange hover:text-darkBg focus-visible:outline focus-visible:outline-2 focus-visible:outline-brandOrange"
+                    >
+                      <i className="fa-solid fa-trash-can text-[10px]" aria-hidden="true" />
+                    </button>
+                  </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </>
         )}
       </section>
+      {mediaToDelete && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/75 px-5 py-8 backdrop-blur-sm"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget && !deletingMedia) setMediaToDelete(null);
+          }}
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-project-media-title"
+            className="w-full max-w-md border border-white/15 bg-darkBg p-6 shadow-2xl sm:p-8"
+          >
+            <p className="mb-4 font-mono text-[9px] uppercase tracking-[0.18em] text-brandOrange">
+              Confirmação · {mediaToDelete.type === 'image' ? 'Imagem' : 'Vídeo'}
+            </p>
+            <h3 id="delete-project-media-title" className="font-display text-2xl font-bold uppercase tracking-tight text-white">
+              Excluir este arquivo?
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-slate-400">
+              A mídia será removida da lista deste projeto. Deseja continuar?
+            </p>
+            <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                disabled={deletingMedia}
+                onClick={() => setMediaToDelete(null)}
+                className="border border-white/20 px-4 py-3 font-mono text-[9px] uppercase tracking-[0.15em] text-slate-300 transition hover:border-white/50 hover:text-white disabled:opacity-50"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                disabled={deletingMedia}
+                onClick={handleDeleteMedia}
+                className="flex items-center justify-center gap-2 border border-brandOrange/60 px-4 py-3 font-mono text-[9px] uppercase tracking-[0.15em] text-brandOrange transition hover:bg-brandOrange hover:text-darkBg disabled:cursor-wait disabled:opacity-50"
+              >
+                <i className="fa-solid fa-trash-can" aria-hidden="true" />
+                {deletingMedia ? 'Removendo...' : 'Excluir arquivo'}
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 }
