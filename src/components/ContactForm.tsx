@@ -9,8 +9,19 @@ export default function ContactForm() {
   const [form, setForm] = useState<ContatoPayload>({ nome: '', email: '', mensagem: '' });
   const [status, setStatus] = useState<Status>('idle');
   const [feedback, setFeedback] = useState('');
+  const [emailCopied, setEmailCopied] = useState(false);
   function update(field: keyof ContatoPayload, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
+  }
+
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText('dev.yaleh@gmail.com');
+      setEmailCopied(true);
+      window.setTimeout(() => setEmailCopied(false), 1800);
+    } catch {
+      setEmailCopied(false);
+    }
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -81,13 +92,17 @@ export default function ContactForm() {
               >
                 <i className="fa-brands fa-linkedin-in" aria-hidden="true" />
               </a>
-              <a
-                href="mailto:dev.yaleh@gmail.com"
-                aria-label="Enviar e-mail para Yaleh Nóbrega"
+              <button
+                type="button"
+                onClick={copyEmail}
+                aria-label="Copiar e-mail de Yaleh Nóbrega"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-slate-300 transition hover:border-brandOrange hover:text-brandOrange focus-ring"
               >
-                <i className="fa-regular fa-envelope" aria-hidden="true" />
-              </a>
+                <i className={emailCopied ? 'fa-solid fa-check' : 'fa-regular fa-envelope'} aria-hidden="true" />
+              </button>
+              <span aria-live="polite" className="font-mono text-[9px] uppercase tracking-[0.15em] text-brandOrange">
+                {emailCopied ? 'Copiado' : ''}
+              </span>
             </div>
 
             <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/15 pt-5 font-mono text-[9px] uppercase tracking-[0.15em] text-slate-500 sm:text-[10px]">

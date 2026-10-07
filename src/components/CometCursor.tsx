@@ -21,9 +21,6 @@ export default function CometCursor() {
     const points: TrailPoint[] = [];
     let pointerTarget: { x: number; y: number } | null = null;
     let head: { x: number; y: number } | null = null;
-    const color = getComputedStyle(document.documentElement)
-      .getPropertyValue('--color-brandOrange')
-      .trim() || '#e0682b';
     let frame = 0;
     let pixelRatio = 1;
     let previousFrameTime = 0;
@@ -42,6 +39,11 @@ export default function CometCursor() {
       const delta = previousFrameTime ? Math.min(time - previousFrameTime, 40) : 16;
       previousFrameTime = time;
       context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      const color = getComputedStyle(document.documentElement)
+        .getPropertyValue('--comet-cursor-color')
+        .trim() || getComputedStyle(document.documentElement)
+          .getPropertyValue('--color-brandOrange')
+          .trim() || '#e0682b';
 
       if (pointerTarget) {
         if (!head) head = { ...pointerTarget };
@@ -110,7 +112,7 @@ export default function CometCursor() {
         context.fill();
 
         context.shadowBlur = 0;
-        context.fillStyle = '#fff4e9';
+        context.fillStyle = color;
         context.beginPath();
         context.arc(trailHead.x, trailHead.y, 2.2, 0, Math.PI * 2);
         context.fill();

@@ -6,7 +6,6 @@
    utilitárias (bg-darkBg, text-brandBlue, border-borderCol, etc.) */
 @theme {
   --color-darkBg: #070c18;
-  --color-cardBg: #0f172a;
   --color-borderCol: #1A2643; /* #1e293b */
   --color-brandBlue: #00a2ff;
   --color-brandOrange: #e0682b;
@@ -70,13 +69,18 @@ body {
   color: #f1f5f9;
 }
 
+html {
+  scrollbar-gutter: stable;
+  background-color: #070c18;
+}
+
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #070c18; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #00a2ff; }
 
 .project-gallery-scroll::-webkit-scrollbar:horizontal { height: 6px; }
-.project-gallery-scroll::-webkit-scrollbar-track:horizontal { background: #070c18; border-radius: 4px; }
+.project-gallery-scroll::-webkit-scrollbar-track:horizontal { background: transparent; border-radius: 4px; }
 .project-gallery-scroll::-webkit-scrollbar-thumb:horizontal { background: #00a2ff; border-radius: 4px; }
 .project-gallery-scroll::-webkit-scrollbar-thumb:horizontal:hover { background: #38bdf8; }
 
@@ -199,7 +203,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: ; /* cor do fundo da trilha */
+  background: transparent; /* deixa o fundo da página aparecer atrás do indicador */
 }
 
 ::-webkit-scrollbar-thumb {
