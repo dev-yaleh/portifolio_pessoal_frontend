@@ -337,13 +337,13 @@ export default function Hero() {
           </motion.a>
         </div>
 
-        <div className="grid flex-1 grid-cols-1 item-start gap-12 py-12 lg:grid-cols-12 lg:gap-10 lg:py-10">
-          <div className="lg:col-span-7 items-start justify-start">
+        <div className="grid flex-1 grid-cols-1 items-start gap-12 py-12 xl:grid-cols-12 xl:gap-10 xl:py-10">
+          <div className="items-start justify-start xl:col-span-7">
             <motion.div variants={reveal} className="mb-5 flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.2em] text-slate-400 sm:mb-7 sm:text-[10px]">
               <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-40" /><span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" /></span>
               Aberta a novas oportunidades
             </motion.div>
-            <motion.h1 aria-label="Desenvolvedora Full Stack" variants={reveal} className="font-display text-[clamp(3.5rem,9.3vw,9rem)] font-bold uppercase leading-[0.78] tracking-[-0.075em] text-white">
+            <motion.h1 aria-label="Desenvolvedora Full Stack" variants={reveal} className="font-display text-[clamp(3.5rem,8vw,9rem)] font-bold uppercase leading-[0.78] tracking-[-0.075em] text-white">
               <TypedText lines={heroTitleLines} typingSpeed={120} erasingSpeed={85} holdDuration={3000} restartDelay={3000} />
             </motion.h1>
             <motion.div variants={reveal} className="mt-7 flex flex-wrap gap-2 sm:mt-8">
@@ -351,17 +351,17 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          <motion.div variants={reveal} className="flex flex-col justify-end lg:col-span-5 lg:items-end lg:self-end lg:pt-14">
-            <p className="mb-5 max-w-xs font-mono text-[10px] uppercase leading-[1.8] tracking-[0.15em] text-slate-400 lg:text-right">
+          <motion.div variants={reveal} className="flex flex-col justify-end xl:col-span-5 xl:items-end xl:self-end xl:pt-14">
+            <p className="mb-5 max-w-xs font-mono text-[10px] uppercase leading-[1.8] tracking-[0.15em] text-slate-400 xl:text-right">
               Construindo produtos digitais úteis, acessíveis e prontos para crescer.
             </p>
-            <h2 className="font-display text-6xl font-bold uppercase leading-[0.82] tracking-[-0.075em] text-white sm:text-7xl lg:text-right xl:text-8xl">
+            <h2 className="font-display text-6xl font-bold uppercase leading-[0.82] tracking-[-0.075em] text-white sm:text-7xl xl:text-right xl:text-8xl">
               Yaleh<br />Nóbrega<span className="text-brandOrange">.</span>
             </h2>
-            <div className="mt-6 flex w-full max-w-sm items-center justify-between border-t border-white/15 pt-3 font-mono text-[9px] uppercase tracking-[0.17em] text-slate-500 lg:self-end">
+            <div className="mt-6 flex w-full max-w-sm items-center justify-between border-t border-white/15 pt-3 font-mono text-[9px] uppercase tracking-[0.17em] text-slate-500 xl:self-end">
               <span>Brasil · Desenvolvedora</span><span>{time}</span>
             </div>
-            <div className="mt-6 flex w-full max-w-sm gap-3 lg:justify-end">
+            <div className="mt-6 flex w-full max-w-sm gap-3 xl:justify-end">
               <a href="#projetos" className="group inline-flex items-center gap-2 rounded-full bg-brandBlue px-4 py-2.5 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-darkBg transition-colors hover:bg-sky-300 sm:text-[10px]">
                 Ver projetos <FiArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
